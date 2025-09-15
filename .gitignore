@@ -2,4 +2,8 @@
 *.db-shm
 *.db-wal
 *.vsidx
+.gitattributes
 .vs/3p-neve-child-theme/v17/.wsuo
+.gitattributes
+.vs/slnx.sqlite
+/.vs
