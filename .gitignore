@@ -7,3 +7,5 @@
 .gitattributes
 .vs/slnx.sqlite
 /.vs
+.gitattributes
+/.vs
