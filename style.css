@@ -1,0 +1,164 @@
+/*
+Theme Name: 3P Neve Child Theme
+Description: Child theme of Neve for 3P Life Operating System
+Template: neve
+Version: 1.0.0
+Author: Max Viskov
+GitHub Theme URI: maxviskov/3p-neve-child-theme
+GitHub Branch: main
+*/
+
+@import url("../neve/style.css");
+
+/* ===== 3P CUSTOM STYLES ===== */
+
+/* 3P Methodology Sections */
+.threep-pillar {
+    background: #f8f9fa;
+    border-left: 4px solid #2c5aa0;
+    margin: 30px 0;
+    padding: 25px;
+    border-radius: 0 8px 8px 0;
+}
+
+.threep-pillar h3 {
+    color: #2c5aa0;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.threep-pillar p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #555;
+}
+
+/* 3P Methodology Grid */
+.threep-methodology {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.pillar-card {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+}
+
+.pillar-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(44, 90, 160, 0.15);
+    border-color: #2c5aa0;
+}
+
+.pillar-icon {
+    font-size: 56px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.pillar-title {
+    color: #2c5aa0;
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.pillar-description {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* 3P Branding */
+.threep-hero {
+    background: linear-gradient(135deg, #2c5aa0 0%, #4a73c4 100%);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.threep-hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.threep-hero .subtitle {
+    font-size: 20px;
+    opacity: 0.9;
+    margin-bottom: 30px;
+}
+
+.threep-cta {
+    background: #ff6b35;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.threep-cta:hover {
+    background: #e55a2b;
+    transform: translateY(-2px);
+    color: white;
+}
+
+/* Custom Page Layouts */
+.threep-page-header {
+    background: #f8f9fa;
+    padding: 60px 0 40px;
+    margin-bottom: 40px;
+}
+
+.threep-page-title {
+    color: #2c5aa0;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.threep-page-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Integration with Neve */
+.neve-main .threep-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .threep-hero h1 {
+        font-size: 36px;
+    }
+    
+    .threep-methodology {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .pillar-card {
+        padding: 20px;
+    }
+    
+    .threep-page-title {
+        font-size: 28px;
+    }
+}
