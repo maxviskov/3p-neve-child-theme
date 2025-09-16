@@ -177,14 +177,3 @@ GitHub Branch: main
     align-items: center;
 }
 
-/* Add this to your <style> section in the template */
-.neve-main {
-    margin-top: 0; /* Ensure content doesn't overlap header */
-}
-
-/* Make sure Neve header is visible */
-.header-menu-sidebar, .nv-nav-wrap {
-    display: block !important;
-    visibility: visible !important;
-}
-/* Rest of your wedding planner CSS here */
