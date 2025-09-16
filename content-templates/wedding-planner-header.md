@@ -9,7 +9,7 @@ cta_link: #plannerForm
         <div class="hero-text">
             # Free Personalized Wedding Planner
             
-            Get your customized, easy-to-follow wedding plan tailored to your budget, style, and timeline. Start planning stress-free today!
+            !!!!Get your customized, easy-to-follow wedding plan tailored to your budget, style, and timeline. Start planning stress-free today!
             
             <div class="trust-badge">
                 ### ⚡ This is Not Just Another Survey
