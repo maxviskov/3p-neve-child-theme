@@ -162,3 +162,19 @@ GitHub Branch: main
         font-size: 28px;
     }
 }
+
+/* Wedding Planner Specific Styles */
+.wedding-planner-page .hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 120px 0 80px;
+}
+
+.hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+/* Rest of your wedding planner CSS here */
