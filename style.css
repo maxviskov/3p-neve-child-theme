@@ -1,10 +1,209 @@
 /*
-Theme Name: 3P Neve Child Theme
+Theme Name: 3P Child Clean Test New Folder
+Description: Child theme for Neve with 3P Life Operating System features
 Template: neve
-Version: 1.0.1
+Version: 1.0.0
 Author: Max Viskov
+Author URI: https://maxviskov.com
 */
 
-@import url("../neve/style.css");
+/* Import parent theme styles - handled by functions.php for better performance */
 
-/* Child theme is working */
+/* 3P Life Operating System Styles */
+
+/* Wedding Planner Page Styles */
+.threep-wedding-planner .wedding-planner-wrapper {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 40px 20px;
+    margin: 20px auto;
+}
+
+.threep-wedding-planner .page-header {
+    margin-bottom: 40px;
+}
+
+.threep-wedding-planner .page-title {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.threep-wedding-planner .page-description {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin-bottom: 0;
+    line-height: 1.6;
+}
+
+/* 3P System Introduction */
+.system-intro {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 50px 30px;
+    border-radius: 12px;
+    margin: 60px 0;
+}
+
+.system-intro h2 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.system-intro p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+/* Pillars Grid */
+.pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.pillar {
+    background: rgba(255,255,255,0.1);
+    padding: 30px 20px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pillar:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.pillar h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.pillar p {
+    font-size: 1rem;
+    opacity: 0.9;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+/* Benefits Section */
+.benefits {
+    padding: 40px 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 40px 0;
+}
+
+.benefits h2 {
+    color: #2c3e50;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.benefits ul {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.benefits li {
+    padding: 12px 0;
+    font-size: 1.1rem;
+    color: #34495e;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.benefits li:last-child {
+    border-bottom: none;
+}
+
+/* Typeform Container */
+.wedding-form-container {
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .threep-wedding-planner .page-title {
+        font-size: 2rem;
+    }
+    
+    .system-intro {
+        padding: 30px 20px;
+        margin: 40px 0;
+    }
+    
+    .system-intro h2 {
+        font-size: 1.8rem;
+    }
+    
+    .pillars-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 30px;
+    }
+    
+    .pillar {
+        padding: 25px 15px;
+    }
+    
+    .benefits {
+        padding: 30px 15px;
+        margin: 30px 0;
+    }
+    
+    .benefits h2 {
+        font-size: 1.6rem;
+    }
+}
+
+/* Accessibility Improvements */
+.pillar:focus,
+.wedding-form-container:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Performance Optimization */
+.pillars-grid,
+.wedding-form-container {
+    will-change: transform;
+}
+
+/* Additional 3P Branding Elements */
+.threep-brand-accent {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.threep-cta-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.threep-cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    color: white;
+    text-decoration: none;
+}
