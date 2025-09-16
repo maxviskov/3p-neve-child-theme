@@ -1,22 +1,24 @@
 ﻿<?php
 /**
  * Template for wedding planner page (slug: wedding)
+ * Integrates with Neve theme structure
  */
 
 get_header(); ?>
 
 <style>
-/* Wedding Planner Specific Styles */
-.wedding-planner-page .hero {
+/* Wedding Planner Specific Styles - Integrated with Neve */
+.wedding-hero-section {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 120px 0 80px;
     text-align: center;
     position: relative;
     overflow: hidden;
+    margin: 0 -15px; /* Break out of container */
 }
 
-.wedding-planner-page .hero::before {
+.wedding-hero-section::before {
     content: '';
     position: absolute;
     top: 0;
@@ -35,6 +37,7 @@ get_header(); ?>
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
 .hero-text h1 {
@@ -80,6 +83,8 @@ get_header(); ?>
 .cta-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 15px 40px rgba(238, 90, 36, 0.4);
+    color: white;
+    text-decoration: none;
 }
 
 .mockup-preview {
@@ -108,9 +113,15 @@ get_header(); ?>
     border-radius: 4px;
 }
 
-.how-it-works {
+.wedding-section {
     padding: 100px 0;
+}
+
+.wedding-section.alt-bg {
     background: #f8f9ff;
+    margin: 0 -15px; /* Break out of container */
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .section-title {
@@ -135,6 +146,8 @@ get_header(); ?>
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .step {
@@ -164,16 +177,14 @@ get_header(); ?>
     margin: 0 auto 1.5rem;
 }
 
-.why-choose-us {
-    padding: 100px 0;
-    background: white;
-}
-
 .benefits-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .benefit {
@@ -199,16 +210,30 @@ get_header(); ?>
     flex-shrink: 0;
 }
 
-.three-p-system {
-    padding: 100px 0;
+.three-p-section {
     background: linear-gradient(135deg, #2c3e50, #3498db);
     color: white;
     text-align: center;
+    padding: 100px 0;
+    margin: 0 -15px; /* Break out of container */
+}
+
+.three-p-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.three-p-section p {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: 0 auto 3rem;
 }
 
 .survey-section {
     padding: 80px 0;
     background: linear-gradient(135deg, #f8f9ff, #e8f4ff);
+    margin: 0 -15px; /* Break out of container */
 }
 
 .form-container {
@@ -220,9 +245,8 @@ get_header(); ?>
     margin: 0 auto;
 }
 
-.final-cta {
+.final-cta-section {
     padding: 100px 0;
-    background: white;
     text-align: center;
 }
 
@@ -244,6 +268,15 @@ get_header(); ?>
     .benefits-grid {
         grid-template-columns: 1fr;
     }
+    
+    .wedding-section.alt-bg,
+    .three-p-section,
+    .survey-section,
+    .wedding-hero-section {
+        margin: 0 -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 </style>
 
@@ -252,10 +285,12 @@ get_header(); ?>
     <a href="#plannerForm" class="cta-button" style="padding: 15px 25px; font-size: 16px;">🎯 Start Your Free Plan Now</a>
 </div>
 
-<div class="wedding-planner-page">
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+<!-- This integrates with Neve's content structure -->
+<div class="nv-content-wrap entry-content">
+    <div class="container single-page-container">
+        
+        <!-- Hero Section -->
+        <section class="wedding-hero-section">
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>Free Personalized Wedding Planner</h1>
@@ -282,12 +317,13 @@ get_header(); ?>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
+    </div> <!-- End container for hero -->
+    
     <!-- How It Works Section -->
-    <section class="how-it-works">
-        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    <section class="wedding-section alt-bg">
+        <div class="container">
             <h2 class="section-title">How It Works</h2>
             <p class="section-subtitle">Three simple steps to your perfect wedding plan</p>
             
@@ -314,8 +350,8 @@ get_header(); ?>
     </section>
 
     <!-- Why Choose Us Section -->
-    <section class="why-choose-us">
-        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    <section class="wedding-section">
+        <div class="container">
             <h2 class="section-title">Why Choose Us?</h2>
             <p class="section-subtitle">Your wedding deserves expert planning made simple</p>
             
@@ -356,17 +392,17 @@ get_header(); ?>
     </section>
 
     <!-- 3P System Section -->
-    <section class="three-p-system">
-        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Our Unique 3P Life Operating System™</h2>
-            <p style="font-size: 1.3rem; color: rgba(255, 255, 255, 0.9); max-width: 600px; margin: 0 auto 3rem;">Plan, Protect, Perform — helping you master life's biggest projects with confidence.</p>
+    <section class="three-p-section">
+        <div class="container">
+            <h2>Our Unique 3P Life Operating System™</h2>
+            <p>Plan, Protect, Perform — helping you master life's biggest projects with confidence.</p>
             <a href="/" class="cta-button">Experience the 3P System</a>
         </div>
     </section>
 
     <!-- Survey Form Section -->
     <section id="plannerForm" class="survey-section">
-        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        <div class="container">
             <h2 class="section-title">Start Your Free Wedding Plan</h2>
             <p class="section-subtitle">Answer a few quick questions to get your personalized timeline and budget guide</p>
             
@@ -378,14 +414,15 @@ get_header(); ?>
     </section>
 
     <!-- Final CTA Section -->
-    <section class="final-cta">
-        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    <div class="container">
+        <section class="final-cta-section">
             <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: #2c3e50;">Questions About Your Wedding Plan?</h2>
             <p style="font-size: 1.2rem; color: #7f8c8d; margin-bottom: 2rem;">Need help with your personalized wedding timeline? We're here to support you!</p>
             <a href="#plannerForm" class="cta-button">Back to Survey</a>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
+
+</div> <!-- End nv-content-wrap -->
 
 <!-- AI Engine Chatbot -->
 <div class='mwai-chatbot-container' data-params='{
@@ -407,7 +444,7 @@ get_header(); ?>
 // Sticky CTA Button Logic
 window.addEventListener('scroll', function() {
     const stickyCTA = document.getElementById('stickyCTA');
-    const heroSection = document.querySelector('.hero');
+    const heroSection = document.querySelector('.wedding-hero-section');
     
     if (heroSection) {
         const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
