@@ -9,7 +9,7 @@ get_header(); ?>
     <div class="container" style="padding: 40px 20px;">
         <div class="wedding-planner-wrapper">
             <header class="page-header text-center">
-                <h1 class="page-title">Free Personalized Wedding Planner</h1>
+                <h1 class="page-title">Free Personalized Wedding Planner!</h1>
                 <p class="page-description">Get your customized wedding plan using our proven 3P Life Operating System methodology.</p>
             </header>
 
