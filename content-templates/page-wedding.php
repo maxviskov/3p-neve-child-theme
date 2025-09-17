@@ -51,8 +51,6 @@ function wedding_template_head_content() {
             text-align: center;
             position: relative;
             overflow: hidden;
-            margin-top: -100px;
-            padding-top: 200px;
         }
 
         #wedding-planner-page .hero::before {
