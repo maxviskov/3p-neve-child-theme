@@ -36,7 +36,7 @@ add_action('wp_enqueue_scripts', 'threep_neve_child_styles');
  * Enqueue Typeform script for wedding planner pages
  */
 function threep_enqueue_typeform_script() {
-    if (is_page_template('page-new-wedding.php')) {
+    if (is_page_template('page-new-wedding.php') || is_page_template('page-wedding.php')) {
         wp_enqueue_script(
             'typeform-embed',
             '//embed.typeform.com/next/embed.js',
@@ -85,7 +85,7 @@ function load_3p_content($page_slug) {
  * Add custom body classes for 3P pages
  */
 function threep_custom_body_classes($classes) {
-    if (is_page_template('page-new-wedding.php')) {
+    if (is_page_template('page-new-wedding.php') || is_page_template('page-wedding.php')) {
         $classes[] = 'threep-wedding-planner';
         $classes[] = 'threep-landing-page';
     }
@@ -98,7 +98,7 @@ add_filter('body_class', 'threep_custom_body_classes');
  * Custom excerpt length for 3P content
  */
 function threep_custom_excerpt_length($length) {
-    if (is_page_template('page-new-wedding.php')) {
+    if (is_page_template('page-new-wedding.php') || is_page_template('page-wedding.php')) {
         return 30;
     }
     return $length;
@@ -109,7 +109,7 @@ add_filter('excerpt_length', 'threep_custom_excerpt_length');
  * Add 3P meta tags for SEO
  */
 function threep_add_meta_tags() {
-    if (is_page_template('page-new-wedding.php')) {
+    if (is_page_template('page-new-wedding.php') || is_page_template('page-wedding.php')) {
         echo '<meta name="description" content="Free personalized wedding planner using proven 3P Life Operating System methodology. Plan, Protect, Perform your perfect wedding day.">' . "\n";
         echo '<meta property="og:title" content="Free Wedding Planner - 3P Life Operating System">' . "\n";
         echo '<meta property="og:description" content="Get your customized wedding plan using our proven project management methodology.">' . "\n";
@@ -123,7 +123,7 @@ add_action('wp_head', 'threep_add_meta_tags');
  */
 function threep_disable_comments_on_wedding_pages($open, $post_id) {
     $post = get_post($post_id);
-    if ($post && get_page_template_slug($post_id) === 'page-new-wedding.php') {
+    if ($post && (get_page_template_slug($post_id) === 'page-new-wedding.php' || get_page_template_slug($post_id) === 'page-wedding.php')) {
         return false;
     }
     return $open;
