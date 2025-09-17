@@ -481,7 +481,7 @@ get_header(); ?>
                         <li>Guest list management</li>
                         <li>Day-of coordination</li>
                     </ul>
-                    <a href="#" class="tool-button coming-soon">Coming Q2 2025</a>
+                    <a href="#" class="tool-button coming-soon">Coming Q4 2025</a>
                 </div>
 
                 <!-- Travel Planning - PAID -->
@@ -497,7 +497,7 @@ get_header(); ?>
                         <li>Safety risk assessment</li>
                         <li>Emergency planning</li>
                     </ul>
-                    <a href="#" class="tool-button coming-soon">Coming Q3 2025</a>
+                    <a href="#" class="tool-button coming-soon">Coming Q1 2026</a>
                 </div>
             </div>
         </div>
