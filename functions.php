@@ -90,6 +90,12 @@ function threep_custom_body_classes($classes) {
         $classes[] = 'threep-landing-page';
     }
     
+    // Add class for front page using our custom template
+    if (is_front_page() && get_page_template_slug() === 'front-page.php') {
+        $classes[] = 'threep-homepage';
+        $classes[] = 'threep-landing-page';
+    }
+    
     return $classes;
 }
 add_filter('body_class', 'threep_custom_body_classes');
@@ -115,6 +121,14 @@ function threep_add_meta_tags() {
         echo '<meta property="og:description" content="Get your customized wedding plan using our proven project management methodology.">' . "\n";
         echo '<meta property="og:type" content="website">' . "\n";
     }
+    
+    // Add meta tags for homepage
+    if (is_front_page()) {
+        echo '<meta name="description" content="Master life\'s biggest projects with our proven 3P system. Free personalized planning tools for weddings, moving, and major life events.">' . "\n";
+        echo '<meta property="og:title" content="3P Life Operating System | Plan, Protect, Perform">' . "\n";
+        echo '<meta property="og:description" content="Professional project management principles adapted for personal life planning.">' . "\n";
+        echo '<meta property="og:type" content="website">' . "\n";
+    }
 }
 add_action('wp_head', 'threep_add_meta_tags');
 
@@ -129,3 +143,26 @@ function threep_disable_comments_on_wedding_pages($open, $post_id) {
     return $open;
 }
 add_filter('comments_open', 'threep_disable_comments_on_wedding_pages', 10, 2);
+
+/**
+ * Handle newsletter signup (optional)
+ * Add this if you want to process newsletter signups via WordPress
+ */
+function threep_handle_newsletter_signup() {
+    if (!isset($_POST['newsletter_email']) || !wp_verify_nonce($_POST['newsletter_nonce'], 'newsletter_signup')) {
+        return;
+    }
+    
+    $email = sanitize_email($_POST['newsletter_email']);
+    
+    if (!is_email($email)) {
+        wp_die('Invalid email address');
+    }
+    
+    // Store email in database or send to email service
+    // Example: Add to WordPress users as subscribers
+    
+    wp_redirect(add_query_arg('newsletter', 'success', home_url()));
+    exit;
+}
+add_action('init', 'threep_handle_newsletter_signup');
