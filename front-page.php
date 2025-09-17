@@ -417,7 +417,7 @@ get_header(); ?>
                         <li>Risk assessment checklist</li>
                         <li>Implementation roadmap</li>
                     </ul>
-                    <a href="<?php echo home_url('/wedding'); ?>" class="tool-button available">Start Planning Free</a>
+                    <a href="<?php echo home_url('/wedding/'); ?>" class="tool-button available">Start Planning Free</a>
                 </div>
 
                 <!-- Moving Planner - COMING SOON -->
