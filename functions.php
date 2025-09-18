@@ -355,12 +355,12 @@ function threep_force_ai_engine_routes() {
 add_action('init', 'threep_force_ai_engine_routes');
 
 // TEMPORARY: Add this, run once, then remove it
-function flush_ai_engine_data() {
-    if (current_user_can('manage_options') && isset($_GET['flush_ai_engine'])) {
-        global $wpdb;
-        $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE 'mwai_%'");
-        $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE 'ai_engine_%'");
-        echo '<div class="notice notice-success"><p>AI Engine data flushed!</p></div>';
-    }
-}
-add_action('admin_notices', 'flush_ai_engine_data');
+//function flush_ai_engine_data() {
+//    if (current_user_can('manage_options') && isset($_GET['flush_ai_engine'])) {
+//        global $wpdb;
+//        $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE 'mwai_%'");
+//        $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE 'ai_engine_%'");
+//        echo '<div class="notice notice-success"><p>AI Engine data flushed!</p></div>';
+//    }
+//}
+//add_action('admin_notices', 'flush_ai_engine_data');
