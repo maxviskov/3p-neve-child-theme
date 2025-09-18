@@ -327,3 +327,29 @@ function threep_security_headers() {
     }
 }
 add_action('send_headers', 'threep_security_headers');
+
+/**
+ * Fix AI Engine cron schedule
+ */
+function threep_add_ai_engine_cron_schedule($schedules) {
+    $schedules['one_minute'] = array(
+        'interval' => 60,
+        'display' => 'Every Minute'
+    );
+    return $schedules;
+}
+add_filter('cron_schedules', 'threep_add_ai_engine_cron_schedule');
+
+/**
+ * Force REST API route registration for AI Engine
+ */
+function threep_force_ai_engine_routes() {
+    if (class_exists('Meow_MWAI_Core')) {
+        global $mwai_core;
+        if ($mwai_core && method_exists($mwai_core, 'rest_api_init')) {
+            remove_action('rest_api_init', array($mwai_core, 'rest_api_init'));
+            add_action('rest_api_init', array($mwai_core, 'rest_api_init'), 5);
+        }
+    }
+}
+add_action('init', 'threep_force_ai_engine_routes');
