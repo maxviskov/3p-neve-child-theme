@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * 3P Neve Child Theme Functions
  * 
