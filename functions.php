@@ -355,6 +355,7 @@ function threep_force_ai_engine_routes() {
 add_action('init', 'threep_force_ai_engine_routes');
 
 // TEMPORARY: Add this, run once, then remove it
+/*
 function flush_ai_engine_data() {
     if (current_user_can('manage_options') && isset($_GET['flush_ai_engine'])) {
         global $wpdb;
@@ -364,3 +365,4 @@ function flush_ai_engine_data() {
     }
 }
 add_action('admin_notices', 'flush_ai_engine_data');
+*/
