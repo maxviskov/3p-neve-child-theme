@@ -577,7 +577,7 @@ get_header(); ?>
     "inputType":"standard",
     "footerType":"standard"
 }' data-system='{
-    "botId":"3p-os-chatbot",
+    "botId":"chatbot-kyjcyq",
     "customId":"chatbot-kyjcyq",
     "userData":null,
     "sessionId":"<?php echo uniqid('3p-'); ?>",
