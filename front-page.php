@@ -543,9 +543,9 @@ get_header(); ?>
         </div>
     </section>
 
-<!--
+
  <?php echo do_shortcode('[mwai_chatbot id="chatbot-kyjcyq"]'); ?>
- -->
+
 
 <?php if (current_user_can('manage_options') && isset($_GET['chatbot_check'])): ?>
 <div style="position: fixed; top: 10px; left: 10px; background: #333; color: white; padding: 15px; z-index: 9999; font-family: monospace; font-size: 12px; max-width: 400px;">
