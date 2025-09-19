@@ -578,7 +578,7 @@ get_header(); ?>
         "inputType":"standard",
         "footerType":"standard"
     }' data-system='{
-        "botId":"chatbot-poq3ao",
+        "botId":chatbot-kyjcyq",
         "customId":null,
         "userData":null,
         "sessionId":"3p-landing",

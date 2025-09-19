@@ -625,8 +625,8 @@ get_header(); ?>
         "inputType":"standard",
         "footerType":"standard"
     }' data-system='{
-        "botId":"chatbot-poq3ao",
-        "customId":"chatbot-poq3ao",
+        "botId":chatbot-kyjcyq",
+        "botId":chatbot-kyjcyq",
         "userData":null,
         "sessionId":"wedding-planner",
         "restNonce":"<?php echo wp_create_nonce('wp_rest'); ?>",
