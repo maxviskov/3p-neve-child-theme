@@ -590,68 +590,6 @@ get_header(); ?>
         </div>
     </section>
 
-<?php echo do_shortcode('[mwai_chatbot  CustomId="1"]'); ?>
-
-    <!-- AI Engine Chatbot - 3P Life Assistant -->
-<div class='mwai-chatbot-container' data-params='{
-    "aiName":"3P Life Assistant: ",
-    "userName":"You: ",
-    "guestName":"Guest: ",
-    "textSend":"Send",
-    "textClear":"Clear",
-    "multiUpload":false,
-    "mode":"chat",
-    "textInputPlaceholder":"Ask about planning...",
-    "textInputMaxLength":512,
-    "textCompliance":"",
-    "startSentence":"Hi! I can help you with life planning questions using our 3P approach. What would you like to know?",
-    "localMemory":true,
-    "themeId":"chatgpt",
-    "window":true,
-    "icon":"",
-    "iconText":"💬",
-    "iconTextDelay":1,
-    "iconAlt":"3P Life Assistant",
-    "iconPosition":"bottom-right",
-    "centerOpen":false,
-    "width":"",
-    "openDelay":"",
-    "iconBubble":true,
-    "windowAnimation":"zoom",
-    "fullscreen":false,
-    "copyButton":false,
-    "headerSubtitle":"3P Life Assistant",
-    "containerType":"standard",
-    "headerType":"standard",
-    "messagesType":"standard",
-    "inputType":"standard",
-    "footerType":"standard"
-}' data-system='{
-    "botId":"3p-os-chatbot",
-    "customId":"chatbot-kyjcyq",
-    "userData":null,
-    "sessionId":"<?php echo wp_generate_uuid4(); ?>",
-    "restNonce":"<?php echo wp_create_nonce('wp_rest'); ?>",
-    "contextId":"<?php echo is_page() ? get_the_ID() : 'homepage'; ?>",
-    "pluginUrl":"<?php echo plugins_url('ai-engine/'); ?>",
-    "restUrl":"<?php echo get_rest_url(); ?>",
-    "stream":true,
-    "debugMode":false,
-    "eventLogs":true,
-    "speech_recognition":false,
-    "speech_synthesis":false,
-    "typewriter":false,
-    "crossSite":false,
-    "actions":[],
-    "blocks":[],
-    "shortcuts":[]
-}' data-theme='{
-    "type":"internal",
-    "name":"ChatGPT",
-    "themeId":"chatgpt",
-    "settings":[],
-    "style":""
-}'></div>
 
 
     <script>
