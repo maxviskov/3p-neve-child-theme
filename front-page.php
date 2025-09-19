@@ -545,7 +545,8 @@ get_header(); ?>
     
     
     
-        <?php echo do_shortcode('[mwai_chatbot CustomId="1"]'); ?>
+        <?php echo do_shortcode('[mwai_chatbot id="chatbot-kyjcyq"]'); ?>
+        
     
         
     <!--
