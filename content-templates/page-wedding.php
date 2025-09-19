@@ -590,6 +590,8 @@ get_header(); ?>
         </div>
     </section>
 
+<?php echo do_shortcode('[mwai_chatbot id="1"]'); ?>
+
     <!-- AI Engine Chatbot - 3P Life Assistant -->
 <div class='mwai-chatbot-container' data-params='{
     "aiName":"3P Life Assistant: ",
@@ -651,25 +653,6 @@ get_header(); ?>
     "style":""
 }'></div>
 
-<script>
-// Force chatbot initialization after page load
-document.addEventListener('DOMContentLoaded', function() {
-    // Wait for AI Engine scripts to load
-    setTimeout(function() {
-        // Check if AI Engine chatbot functions are available
-        if (typeof window.mwai !== 'undefined') {
-            console.log('✅ AI Engine chatbot loaded successfully');
-        } else {
-            console.warn('⚠️ AI Engine chatbot not loaded - checking again in 2 seconds');
-            setTimeout(function() {
-                if (typeof window.mwai === 'undefined') {
-                    console.error('❌ AI Engine chatbot failed to load');
-                }
-            }, 2000);
-        }
-    }, 1000);
-});
-</script>
 
     <script>
         // Sticky CTA Button Logic
