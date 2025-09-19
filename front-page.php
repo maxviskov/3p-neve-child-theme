@@ -543,60 +543,89 @@ get_header(); ?>
         </div>
     </section>
 
-    <!-- AI Engine Chatbot -->
     <div class='mwai-chatbot-container' data-params='{
-        "aiName":"3P Assistant: ",
-        "userName":"You: ",
-        "guestName":"Guest: ",
-        "textSend":"Send",
-        "textClear":"Clear",
-        "multiUpload":false,
-        "mode":"chat",
-        "textInputPlaceholder":"Ask about our planning tools...",
-        "textInputMaxLength":512,
-        "textCompliance":"",
-        "startSentence":"Hi! I can help you learn about our 3P Life Operating System and planning tools. What would you like to know?",
-        "localMemory":true,
-        "themeId":"chatgpt",
-        "window":true,
-        "icon":"",
-        "iconText":"",
-        "iconTextDelay":1,
-        "iconAlt":"3P Life Assistant",
-        "iconPosition":"bottom-right",
-        "centerOpen":false,
-        "width":"",
-        "openDelay":"",
-        "iconBubble":false,
-        "windowAnimation":"zoom",
-        "fullscreen":false,
-        "copyButton":false,
-        "headerSubtitle":"3P Life Assistant",
-        "containerType":"standard",
-        "headerType":"standard",
-        "messagesType":"standard",
-        "inputType":"standard",
-        "footerType":"standard"
-    }' data-system='{
-        "botId":chatbot-kyjcyq",
-        "customId":null,
-        "userData":null,
-        "sessionId":"3p-landing",
-        "restNonce":"<?php echo wp_create_nonce('wp_rest'); ?>",
-        "contextId":"chatbot-poq3ao",
-        "pluginUrl":"<?php echo plugin_dir_url(''); ?>ai-engine/",
-        "restUrl":"<?php echo get_rest_url(); ?>",
-        "stream":true,
-        "debugMode":false,
-        "eventLogs":true,
-        "speech_recognition":false,
-        "speech_synthesis":false,
-        "typewriter":false,
-        "crossSite":false,
-        "actions":[],
-        "blocks":[],
-        "shortcuts":[]
-    }'></div>
+    "aiName":"3P Life Assistant: ",
+    "userName":"You: ",
+    "guestName":"Guest: ",
+    "textSend":"Send",
+    "textClear":"Clear",
+    "multiUpload":false,
+    "mode":"chat",
+    "textInputPlaceholder":"Ask about planning...",
+    "textInputMaxLength":512,
+    "textCompliance":"",
+    "startSentence":"Hi! I can help you with planning questions using our 3P approach. What would you like to know?",
+    "localMemory":true,
+    "themeId":"chatgpt",
+    "window":true,
+    "icon":"",
+    "iconText":"💬",
+    "iconTextDelay":1,
+    "iconAlt":"3P Life Assistant",
+    "iconPosition":"bottom-right",
+    "centerOpen":false,
+    "width":"",
+    "openDelay":"",
+    "iconBubble":true,
+    "windowAnimation":"zoom",
+    "fullscreen":false,
+    "copyButton":false,
+    "headerSubtitle":"3P Life Assistant",
+    "containerType":"standard",
+    "headerType":"standard",
+    "messagesType":"standard",
+    "inputType":"standard",
+    "footerType":"standard"
+}' data-system='{
+    "botId":"3p-os-chatbot",
+    "customId":"chatbot-kyjcyq",
+    "userData":null,
+    "sessionId":"<?php echo uniqid('3p-'); ?>",
+    "restNonce":"<?php echo wp_create_nonce('wp_rest'); ?>",
+    "contextId":"<?php echo is_page() ? get_the_ID() : 'homepage'; ?>",
+    "pluginUrl":"<?php echo plugins_url('ai-engine/'); ?>",
+    "restUrl":"<?php echo get_rest_url(); ?>",
+    "stream":true,
+    "debugMode":false,
+    "eventLogs":true,
+    "speech_recognition":false,
+    "speech_synthesis":false,
+    "typewriter":false,
+    "crossSite":false,
+    "actions":[],
+    "blocks":[],
+    "shortcuts":[]
+}' data-theme='{
+    "type":"internal",
+    "name":"ChatGPT",
+    "themeId":"chatgpt",
+    "settings":[],
+    "style":""
+}'></div>
+
+<?php if (current_user_can('manage_options') && isset($_GET['chatbot_check'])): ?>
+<div style="position: fixed; top: 10px; left: 10px; background: #333; color: white; padding: 15px; z-index: 9999; font-family: monospace; font-size: 12px; max-width: 400px;">
+    <h4 style="color: white; margin: 0 0 10px 0;">Chatbot Status Check</h4>
+    <div>✅ Page template: <?php echo basename(get_page_template()); ?></div>
+    <div>✅ Current page ID: <?php echo get_the_ID(); ?></div>
+    <div>✅ REST URL: <?php echo get_rest_url(); ?></div>
+    <div>✅ Nonce generated: <?php echo wp_create_nonce('wp_rest') ? 'Yes' : 'No'; ?></div>
+    <div>✅ AI Engine shortcode exists: <?php echo shortcode_exists('mwai_chatbot') ? 'Yes' : 'No'; ?></div>
+    
+    <?php 
+    $chatbots = get_option('mwai_chatbots', []);
+    if (!empty($chatbots)):
+    ?>
+    <div>✅ Available chatbot IDs:</div>
+    <?php foreach (array_keys($chatbots) as $bot_id): ?>
+        <div style="margin-left: 20px;">- <?php echo esc_html($bot_id); ?></div>
+    <?php endforeach; ?>
+    <?php else: ?>
+    <div>❌ No chatbots configured in AI Engine</div>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+
 
     <script>
         // Smooth scrolling for navigation links
