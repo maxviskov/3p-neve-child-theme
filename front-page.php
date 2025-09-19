@@ -543,8 +543,13 @@ get_header(); ?>
         </div>
     </section>
     
+    <div class='mwai-chatbot-container'>
+
+
     <?php echo do_shortcode('[mwai_chatbot id="chatbot-kyjcyq"]'); ?>
+    
     <?php echo do_shortcode('[mwai_chatbot CustomId="1"]'); ?>
+    </div>
     
     <!--
     <div class='mwai-chatbot-container' data-params='{
