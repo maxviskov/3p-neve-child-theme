@@ -590,7 +590,7 @@ get_header(); ?>
         </div>
     </section>
 
-<?php echo do_shortcode('[mwai_chatbot id="1"]'); ?>
+<?php echo do_shortcode('[mwai_chatbot  CustomId="1"]'); ?>
 
     <!-- AI Engine Chatbot - 3P Life Assistant -->
 <div class='mwai-chatbot-container' data-params='{
