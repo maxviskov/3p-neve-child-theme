@@ -543,14 +543,11 @@ get_header(); ?>
         </div>
     </section>
     
-    <div class='mwai-chatbot-container'>
-
-
-    <?php echo do_shortcode('[mwai_chatbot id="chatbot-kyjcyq"]'); ?>
     
-    <?php echo do_shortcode('[mwai_chatbot CustomId="1"]'); ?>
-    </div>
     
+        <?php echo do_shortcode('[mwai_chatbot CustomId="1"]'); ?>
+    
+        
     <!--
     <div class='mwai-chatbot-container' data-params='{
     "aiName":"3P Life Assistant: ",
