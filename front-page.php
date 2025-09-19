@@ -543,9 +543,67 @@ get_header(); ?>
         </div>
     </section>
 
+    <?php echo do_shortcode('[mwai_chatbot id="chatbot-kyjcyq"]'); ?>
 
- <?php echo do_shortcode('[mwai_chatbot id="chatbot-kyjcyq"]'); ?>
-
+    <div class='mwai-chatbot-container' data-params='{
+    "aiName":"3P Life Assistant: ",
+    "userName":"You: ",
+    "guestName":"Guest: ",
+    "textSend":"Send",
+    "textClear":"Clear",
+    "multiUpload":false,
+    "mode":"chat",
+    "textInputPlaceholder":"Ask about planning...",
+    "textInputMaxLength":512,
+    "textCompliance":"",
+    "startSentence":"Hi! I can help you with planning questions using our 3P approach. What would you like to know?",
+    "localMemory":true,
+    "themeId":"chatgpt",
+    "window":true,
+    "icon":"",
+    "iconText":"💬",
+    "iconTextDelay":1,
+    "iconAlt":"3P Life Assistant",
+    "iconPosition":"bottom-right",
+    "centerOpen":false,
+    "width":"",
+    "openDelay":"",
+    "iconBubble":true,
+    "windowAnimation":"zoom",
+    "fullscreen":false,
+    "copyButton":false,
+    "headerSubtitle":"3P Life Assistant",
+    "containerType":"standard",
+    "headerType":"standard",
+    "messagesType":"standard",
+    "inputType":"standard",
+    "footerType":"standard"
+}' data-system='{
+    "botId":"chatbot-kyjcyq",
+    "customId":"chatbot-kyjcyq",
+    "userData":null,
+    "sessionId":"<?php echo uniqid('3p-'); ?>",
+    "restNonce":"<?php echo wp_create_nonce('wp_rest'); ?>",
+    "contextId":"<?php echo is_page() ? get_the_ID() : 'homepage'; ?>",
+    "pluginUrl":"<?php echo plugins_url('ai-engine/'); ?>",
+    "restUrl":"<?php echo get_rest_url(); ?>",
+    "stream":true,
+    "debugMode":false,
+    "eventLogs":true,
+    "speech_recognition":false,
+    "speech_synthesis":false,
+    "typewriter":false,
+    "crossSite":false,
+    "actions":[],
+    "blocks":[],
+    "shortcuts":[]
+}' data-theme='{
+    "type":"internal",
+    "name":"ChatGPT",
+    "themeId":"chatgpt",
+    "settings":[],
+    "style":""
+}'></div>
 
 <?php if (current_user_can('manage_options') && isset($_GET['chatbot_check'])): ?>
 <div style="position: fixed; top: 10px; left: 10px; background: #333; color: white; padding: 15px; z-index: 9999; font-family: monospace; font-size: 12px; max-width: 400px;">
