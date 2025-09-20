@@ -124,7 +124,7 @@ function threep_homepage_head_content() {
             font-weight: 700;
             text-align: center;
             margin-bottom: 1rem;
-            color: #2c3e50;
+            color: #F08F3E;
         }
 
         #threep-homepage .section-subtitle {
