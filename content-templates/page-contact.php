@@ -364,7 +364,8 @@ get_header(); ?>
                 <h3 style="color: #2c3e50; margin-bottom: 25px; font-size: 1.5rem;">Send us a Message</h3>
                 
                 <!-- Contact Form 7 Shortcode - Replace with your actual form ID -->
-                <?php echo do_shortcode('[contact-form-7 id="CONTACT_FORM_ID" title="Contact Form"]'); ?>
+                <?php echo do_shortcode('[contact-form-7 id="0a8174e" title="Contact Form"]'); ?>
+                
             </div>
 
             <!-- Contact Information -->
