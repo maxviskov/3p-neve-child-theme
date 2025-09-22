@@ -1,43 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - 3P Life Operating System | Max Viskov</title>
+<?php
+/*
+Template Name: 3P Life OS About Page
+Description: About page template for 3P Life Operating System explaining methodology and founder
+*/
+
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+// Add custom head content for this template
+function threep_about_head_content() {
+    ?>
     <meta name="description" content="Learn about Max Viskov and the revolutionary 3P Life Operating System that helps people plan, protect, and perform their most important life projects.">
     
-    <!-- Google Analytics 4 - Replace GA_MEASUREMENT_ID with your actual ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID');
-    </script>
-    
     <style>
-        /* Reset and Base Styles */
-        #about-page * {
+        /* Reset and Base Styles for 3P About Page */
+        #threep-about * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        #about-page {
+        #threep-about {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
             color: #2c3e50;
             background: #ffffff;
         }
 
-        #about-page .container {
+        #threep-about .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
         /* Hero Section */
-        #about-page .hero {
+        #threep-about .hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 120px 0 80px;
@@ -46,7 +45,7 @@
             overflow: hidden;
         }
 
-        #about-page .hero::before {
+        #threep-about .hero::before {
             content: '';
             position: absolute;
             top: 0;
@@ -56,45 +55,46 @@
             background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
         }
 
-        #about-page .hero-content {
+        #threep-about .hero-content {
             position: relative;
             z-index: 2;
             max-width: 800px;
             margin: 0 auto;
         }
 
-        #about-page .hero h1 {
+        #threep-about .hero h1 {
             font-size: 3rem;
             font-weight: 800;
             margin-bottom: 1rem;
+            line-height: 1.2;
         }
 
-        #about-page .hero p {
+        #threep-about .hero p {
             font-size: 1.3rem;
             margin-bottom: 2rem;
             opacity: 0.95;
         }
 
-        #about-page .hero .tagline {
+        #threep-about .hero .tagline {
             font-size: 1.1rem;
             font-style: italic;
             opacity: 0.9;
         }
 
         /* Section Styles */
-        #about-page .section {
+        #threep-about .section {
             padding: 80px 0;
         }
 
-        #about-page .section-title {
+        #threep-about .section-title {
             font-size: 2.5rem;
             font-weight: 700;
             text-align: center;
             margin-bottom: 1rem;
-            color: #2c3e50;
+            color: #F08F3E;
         }
 
-        #about-page .section-subtitle {
+        #threep-about .section-subtitle {
             font-size: 1.2rem;
             text-align: center;
             color: #7f8c8d;
@@ -105,40 +105,40 @@
         }
 
         /* Story Section */
-        #about-page .story-section {
-            background: #f8f9fa;
+        #threep-about .story-section {
+            background: #f8f9ff;
         }
 
-        #about-page .story-content {
+        #threep-about .story-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
         }
 
-        #about-page .story-text {
+        #threep-about .story-text {
             font-size: 1.1rem;
         }
 
-        #about-page .story-text h3 {
+        #threep-about .story-text h3 {
             color: #3498db;
             font-size: 1.4rem;
             margin-bottom: 1rem;
         }
 
-        #about-page .story-text p {
+        #threep-about .story-text p {
             margin-bottom: 1.5rem;
         }
 
-        #about-page .profile-card {
+        #threep-about .profile-card {
             background: white;
             padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             text-align: center;
         }
 
-        #about-page .profile-image {
+        #threep-about .profile-image {
             width: 180px;
             height: 180px;
             border-radius: 50%;
@@ -149,76 +149,84 @@
             justify-content: center;
             font-size: 4rem;
             color: white;
+            font-weight: 700;
         }
 
-        #about-page .profile-name {
+        #threep-about .profile-name {
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             color: #2c3e50;
         }
 
-        #about-page .profile-title {
+        #threep-about .profile-title {
             color: #3498db;
             font-size: 1.1rem;
             margin-bottom: 1rem;
         }
 
-        #about-page .profile-credentials {
+        #threep-about .profile-credentials {
             font-size: 0.95rem;
             color: #7f8c8d;
             line-height: 1.4;
         }
 
         /* 3P System Section */
-        #about-page .system-section {
+        #threep-about .system-section {
             background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
             color: white;
         }
 
-        #about-page .system-section .section-title,
-        #about-page .system-section .section-subtitle {
+        #threep-about .system-section .section-title,
+        #threep-about .system-section .section-subtitle {
             color: white;
         }
 
-        #about-page .pillars-grid {
+        #threep-about .pillars-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
-        #about-page .pillar {
+        #threep-about .pillar {
             background: rgba(255,255,255,0.1);
             padding: 2rem;
-            border-radius: 12px;
+            border-radius: 20px;
             text-align: center;
             backdrop-filter: blur(10px);
         }
 
-        #about-page .pillar-icon {
+        #threep-about .pillar-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
         }
 
-        #about-page .pillar h3 {
+        #threep-about .pillar h3 {
             font-size: 1.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
-        #about-page .pillar p {
+        #threep-about .pillar h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        #threep-about .pillar p {
             opacity: 0.9;
         }
 
         /* Mission Section */
-        #about-page .mission-section {
+        #threep-about .mission-section {
             text-align: center;
+            background: white;
         }
 
-        #about-page .mission-statement {
-            background: #f8f9fa;
+        #threep-about .mission-statement {
+            background: #f8f9ff;
             padding: 3rem;
-            border-radius: 12px;
+            border-radius: 20px;
             font-size: 1.3rem;
             font-style: italic;
             color: #2c3e50;
@@ -226,24 +234,24 @@
             margin: 2rem 0;
         }
 
-        #about-page .values-grid {
+        #threep-about .values-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
-        #about-page .value-item {
+        #threep-about .value-item {
             text-align: center;
             padding: 1.5rem;
         }
 
-        #about-page .value-icon {
+        #threep-about .value-icon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
         }
 
-        #about-page .value-title {
+        #threep-about .value-title {
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 1rem;
@@ -251,63 +259,65 @@
         }
 
         /* CTA Section */
-        #about-page .cta-section {
+        #threep-about .cta-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             text-align: center;
         }
 
-        #about-page .cta-button {
+        #threep-about .cta-button {
             display: inline-block;
-            padding: 15px 40px;
-            background: rgba(255,255,255,0.2);
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             color: white;
             text-decoration: none;
             border-radius: 50px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1.1rem;
             margin-top: 2rem;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(238, 90, 36, 0.3);
         }
 
-        #about-page .cta-button:hover {
-            background: rgba(255,255,255,0.3);
+        #threep-about .cta-button:hover {
             transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.4);
+            color: white;
+            text-decoration: none;
         }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            #about-page .hero h1 {
+            #threep-about .hero h1 {
                 font-size: 2.5rem;
             }
 
-            #about-page .hero p {
+            #threep-about .hero p {
                 font-size: 1.1rem;
             }
 
-            #about-page .section-title {
+            #threep-about .section-title {
                 font-size: 2rem;
             }
 
-            #about-page .story-content {
+            #threep-about .story-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
 
-            #about-page .pillars-grid {
+            #threep-about .pillars-grid {
                 grid-template-columns: 1fr;
             }
 
-            #about-page .values-grid {
+            #threep-about .values-grid {
                 grid-template-columns: 1fr;
             }
 
-            #about-page .section {
+            #threep-about .section {
                 padding: 60px 0;
             }
 
-            #about-page .mission-statement {
+            #threep-about .mission-statement {
                 padding: 2rem;
                 font-size: 1.1rem;
             }
@@ -325,14 +335,27 @@
             }
         }
 
-        #about-page .animate-on-scroll {
+        #threep-about .animate-on-scroll {
             animation: fadeInUp 0.8s ease-out;
         }
-    </style>
-</head>
 
-<body>
-<div id="about-page">
+        /* Override WordPress theme styles */
+        #threep-about .entry-header {
+            display: none;
+        }
+
+        #threep-about .entry-content {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <?php
+}
+add_action('wp_head', 'threep_about_head_content');
+
+get_header(); ?>
+
+<div id="threep-about">
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
@@ -451,40 +474,68 @@
             <h2 class="section-title">Ready to Transform Your Life Planning?</h2>
             <p class="section-subtitle">Join thousands who have discovered the power of systematic life management</p>
             
-            <a href="/wedding" class="cta-button">🎯 Start with Our Free Wedding Planner</a>
+            <a href="<?php echo home_url('/wedding/'); ?>" class="cta-button">🎯 Start with Our Free Wedding Planner</a>
             
             <p style="margin-top: 2rem; opacity: 0.9;">Experience the 3P methodology with our most popular free tool, then explore our complete life planning system.</p>
         </div>
     </section>
+
+    <!-- AI Chatbot Integration -->
+    <?php echo do_shortcode('[mwai_chatbot id="chatbot-kyjcyq"]'); ?>
+
+    <!-- Debug Section (Admin Only) -->
+    <?php if (current_user_can('manage_options') && isset($_GET['chatbot_check'])): ?>
+    <div style="position: fixed; top: 10px; left: 10px; background: #333; color: white; padding: 15px; z-index: 9999; font-family: monospace; font-size: 12px; max-width: 400px;">
+        <h4 style="color: white; margin: 0 0 10px 0;">Chatbot Status Check</h4>
+        <div>✅ Page template: <?php echo basename(get_page_template()); ?></div>
+        <div>✅ Current page ID: <?php echo get_the_ID(); ?></div>
+        <div>✅ REST URL: <?php echo get_rest_url(); ?></div>
+        <div>✅ Nonce generated: <?php echo wp_create_nonce('wp_rest') ? 'Yes' : 'No'; ?></div>
+        <div>✅ AI Engine shortcode exists: <?php echo shortcode_exists('mwai_chatbot') ? 'Yes' : 'No'; ?></div>
+    </div>
+    <?php endif; ?>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('#threep-about a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll (simple version)
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('#threep-about .section');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('animate-on-scroll');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateOnScroll);
+        animateOnScroll(); // Run once on load
+
+        // Track page interactions
+        document.querySelector('#threep-about .cta-button').addEventListener('click', function() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'about_cta_click', {
+                    'event_category': 'engagement',
+                    'event_label': 'wedding_planner_from_about'
+                });
+            }
+        });
+    </script>
 </div>
 
-<script>
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
-
-// Add animation on scroll (simple version)
-const animateOnScroll = () => {
-    const elements = document.querySelectorAll('.section');
-    elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        
-        if (elementTop < window.innerHeight - elementVisible) {
-            element.classList.add('animate-on-scroll');
-        }
-    });
-};
-
-window.addEventListener('scroll', animateOnScroll);
-animateOnScroll(); // Run once on load
-</script>
-
-</body>
-</html>
+<?php get_footer(); ?>
