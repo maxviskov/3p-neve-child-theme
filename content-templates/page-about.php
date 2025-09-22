@@ -481,8 +481,11 @@ get_header(); ?>
         </div>
     </section>
 
+    
     <!-- AI Chatbot Integration -->
+    <!--
     <?php echo do_shortcode('[mwai_chatbot id="chatbot-kyjcyq"]'); ?>
+    -->
 
     <!-- Debug Section (Admin Only) -->
     <?php if (current_user_can('manage_options') && isset($_GET['chatbot_check'])): ?>

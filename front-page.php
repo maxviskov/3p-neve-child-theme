@@ -544,9 +544,9 @@ get_header(); ?>
     </section>
     
     
-    
+    <!--
         <?php echo do_shortcode('[mwai_chatbot id="chatbot-kyjcyq"]'); ?>
-        
+    -->    
     
         
     <!--
