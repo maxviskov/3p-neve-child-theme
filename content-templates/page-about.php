@@ -4,6 +4,7 @@ Template Name: 3P Life OS About Page
 Description: About page template for 3P Life Operating System explaining methodology and founder
 */
 
+
 // Prevent direct access
 if (!defined('ABSPATH')) {
     exit;
