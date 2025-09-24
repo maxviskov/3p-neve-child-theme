@@ -85,6 +85,19 @@ get_header(); ?>
                 </div>
 
                 <div class="faq-item">
+    <h3>What if I've created multiple wedding plans with the same email?</h3>
+    <div class="faq-answer">
+        <p>If you've used the same email address to create multiple wedding plans, our resend tool will automatically send you the most recent one. This covers most situations since couples typically create one comprehensive plan.</p>
+        <p>If you need access to an older plan you created, please <a href="/support">contact our support team</a> with:</p>
+        <ul>
+            <li>Your email address</li>
+            <li>The approximate date you created the plan you're looking for</li>
+            <li>Any details that might help identify it (wedding date, venue type, etc.)</li>
+        </ul>
+    </div>
+</div>
+
+                <div class="faq-item">
                     <h3>The email arrived but there's no PDF attachment</h3>
                     <div class="faq-answer">
                         <p>If the PDF didn't generate properly, your email will contain a text preview of your plan. This still includes all the essential information you need. We're working to improve PDF generation reliability. Contact support if you need a properly formatted version.</p>
