@@ -159,7 +159,11 @@ if (isset($_GET['resent']) && $_GET['resent'] === 'success') {
         <!-- Email Lookup Form -->
         <div class="lookup-form-container" style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
             <h2 style="margin-top: 0; color: #333;">Find Your Wedding Plan</h2>
-            <p style="color: #666; margin-bottom: 25px;">Enter the email address you used when completing the wedding planner survey:</p>
+            
+            <p style="color: #666; margin-bottom: 25px;">
+    Enter the email address you used when completing the wedding planner survey. 
+    <br><small><em>Note: If you've created multiple plans with this email, we'll send you the most recent one.</em></small>
+</p>
             
             <form method="POST" action="">
                 <?php wp_nonce_field('wedding_resend', 'resend_nonce'); ?>
