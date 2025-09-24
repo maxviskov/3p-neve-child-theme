@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function resend_wedding_plan_email($submission_data) {
     try {
         // Get email sender instance
-        $email_sender = new Wedding_Email_Sender();
+        $email_sender = new Wedding_AI_Email_Sender();
         
         // Parse form responses - CHANGED: Use your field name
         $form_data = json_decode($submission_data['form_responses'], true);
