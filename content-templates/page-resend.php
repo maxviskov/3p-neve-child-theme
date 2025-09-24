@@ -301,12 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
  * Resend wedding plan email function
  * UPDATED: Works with your database structure
  */
-
-/**
- * Resend wedding plan email function
- * CORRECTED: Uses the actual method name from your email sender class
- */
-function resend_wedding_plan_email($submission_data) {
+ function resend_wedding_plan_email($submission_data) {
     try {
         // Get email sender instance
         $email_sender = new Wedding_AI_Email_Sender();
