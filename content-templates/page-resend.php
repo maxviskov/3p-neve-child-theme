@@ -6,7 +6,9 @@
  * Save this as: page-resend.php in your theme directory
  */
 
-require_once get_template_directory() . '/includes/class-database.php';
+// ADD THIS: Include your database class
+require_once get_template_directory() . '/includes/class-wedding-database.php';
+
 get_header(); ?>
 
 <div class="resend-container" style="max-width: 800px; margin: 40px auto; padding: 20px;">
@@ -20,8 +22,8 @@ $submission_data = null;
 
 if (isset($_POST['action'])) {
     
-    // Initialize database handler
-    $db = get_wedding_database();
+    // Initialize database handler - CHANGED: Use your class name
+    $db = new Wedding_Planner_Database();
     
     if ($_POST['action'] === 'lookup_email') {
         
@@ -64,7 +66,7 @@ if (isset($_POST['action'])) {
                 $message_type = 'error';
             } else {
                 
-                // Check if resend is allowed
+                // Check if resend is allowed - CHANGED: Use your method
                 $can_resend = $db->can_resend_email($submission_data['email']);
                 
                 if (!$can_resend['can_resend']) {
@@ -270,13 +272,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <?php
 /**
  * Resend wedding plan email function
+ * UPDATED: Works with your database structure
  */
 function resend_wedding_plan_email($submission_data) {
     try {
         // Get email sender instance
         $email_sender = new Wedding_Email_Sender();
         
-        // Parse form responses
+        // Parse form responses - CHANGED: Use your field name
         $form_data = json_decode($submission_data['form_responses'], true);
         
         // Check if PDF exists
@@ -287,7 +290,7 @@ function resend_wedding_plan_email($submission_data) {
             $pdf_path = $submission_data['pdf_file_path'];
         }
         
-        // Send email
+        // Send email - CHANGED: Use your field name
         $email_data = array(
             'wedding_data' => $form_data,
             'content' => $submission_data['ai_content'],
