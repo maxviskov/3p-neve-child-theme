@@ -301,30 +301,22 @@ document.addEventListener('DOMContentLoaded', function() {
  * Resend wedding plan email function
  * UPDATED: Works with your database structure
  */
+
+/**
+ * Resend wedding plan email function
+ * CORRECTED: Uses the actual method name from your email sender class
+ */
 function resend_wedding_plan_email($submission_data) {
     try {
         // Get email sender instance
         $email_sender = new Wedding_AI_Email_Sender();
         
-        // Parse form responses - CHANGED: Use your field name
+        // Parse form responses
         $form_data = json_decode($submission_data['form_responses'], true);
         
-        // Check if PDF exists
-        $pdf_path = null;
-        if ($submission_data['pdf_generated'] && 
-            !empty($submission_data['pdf_file_path']) && 
-            file_exists($submission_data['pdf_file_path'])) {
-            $pdf_path = $submission_data['pdf_file_path'];
-        }
-        
-        // Send email - CHANGED: Use your field name
-        $email_data = array(
-            'wedding_data' => $form_data,
-            'content' => $submission_data['ai_content'],
-            'pdf_path' => $pdf_path
-        );
-        
-        return $email_sender->send_wedding_plan_email($email_data);
+        // Use the actual method name: send_with_pdf()
+        // This method expects $data and $content parameters
+        return $email_sender->send_with_pdf($form_data, $submission_data['ai_content']);
         
     } catch (Exception $e) {
         error_log('Wedding plan resend failed: ' . $e->getMessage());
