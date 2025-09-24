@@ -6,10 +6,34 @@
  * Save this as: page-resend.php in your theme directory
  */
 
-// ADD THIS: Include your database class
-// No require_once needed - plugin handles class loading
+
+// Load required classes from the plugin
 if (!class_exists('Wedding_Planner_Database')) {
-    wp_die('Wedding AI Planner plugin is not properly loaded.');
+    wp_die('Wedding AI Planner plugin must be active to use this feature.');
+}
+
+// Load the email sender class
+if (!class_exists('Wedding_Email_Sender')) {
+    $email_sender_path = WP_PLUGIN_DIR . '/wedding-ai-planner/includes/class-email-sender.php';
+    if (file_exists($email_sender_path)) {
+        require_once $email_sender_path;
+    }
+}
+
+// Load any other required classes
+if (!class_exists('Wedding_AI_Logger')) {
+    $logger_path = WP_PLUGIN_DIR . '/wedding-ai-planner/includes/class-logger.php';
+    if (file_exists($logger_path)) {
+        require_once $logger_path;
+    }
+}
+
+// Load PDF generator if needed
+if (!class_exists('Wedding_AI_PDF_Generator')) {
+    $pdf_path = WP_PLUGIN_DIR . '/wedding-ai-planner/includes/class-pdf-generator.php';
+    if (file_exists($pdf_path)) {
+        require_once $pdf_path;
+    }
 }
 
 get_header(); ?>
