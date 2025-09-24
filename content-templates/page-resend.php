@@ -7,7 +7,10 @@
  */
 
 // ADD THIS: Include your database class
-require_once get_template_directory() . '/includes/class-wedding-database.php';
+// No require_once needed - plugin handles class loading
+if (!class_exists('Wedding_Planner_Database')) {
+    wp_die('Wedding AI Planner plugin is not properly loaded.');
+}
 
 get_header(); ?>
 
