@@ -13,7 +13,7 @@ if (!class_exists('Wedding_Planner_Database')) {
 }
 
 // Load the email sender class
-if (!class_exists('Wedding_Email_Sender')) {
+if (!class_exists('Wedding_AI_Email_Sender')) {
     $email_sender_path = WP_PLUGIN_DIR . '/wedding-ai-planner/includes/class-email-sender.php';
     if (file_exists($email_sender_path)) {
         require_once $email_sender_path;
