@@ -6,6 +6,7 @@
  * Save this as: page-resend.php in your theme directory
  */
 
+require_once get_template_directory() . '/includes/class-database.php';
 get_header(); ?>
 
 <div class="resend-container" style="max-width: 800px; margin: 40px auto; padding: 20px;">
