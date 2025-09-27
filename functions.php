@@ -10,8 +10,10 @@
 
 // Add this at the very top of functions.php after <?php
 error_log('=== FUNCTIONS.PHP LOADED ===');
-error_log('$threep_email_service at functions.php start: ' . (defined('$threep_email_service') ? $threep_email_service : 'NOT DEFINED'));
-error_log('$threep_mailchimp_api_key at functions.php start: ' . (defined('$threep_mailchimp_api_key') ? 'DEFINED' : 'NOT DEFINED'));
+error_log('$threep_email_service in functions.php: ' . (isset($GLOBALS['$threep_email_service']) && !empty($GLOBALS['$threep_email_service']) ? 'DEFINED' : 'NOT DEFINED'));
+error_log('$threep_mailchimp_api_key in functions.php: ' . (isset($GLOBALS['threep_mailchimp_api_key']) && !empty($GLOBALS['threep_mailchimp_api_key']) ? 'DEFINED' : 'NOT DEFINED'));
+
+
 
 
 // Prevent direct access
