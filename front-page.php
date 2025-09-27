@@ -410,10 +410,10 @@ function threep_homepage_head_content() {
     left: 0;
     width: 100%;
     height: 100%;
-    //background: rgba(0, 0, 0, 0.8);
+    /* background: rgba(0, 0, 0, 0.8); */
     background: rgba(255, 0, 0, 0.5) !important; 
     z-index: 999999;
-    display: none;
+    /* display: none; */
     align-items: center;
     justify-content: center;
     transition: opacity 0.3s ease;
