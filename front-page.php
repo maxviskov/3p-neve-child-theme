@@ -420,7 +420,7 @@ function threep_homepage_head_content() {
 
 .threep-modal-overlay.show {
     display: flex !important;
-    opacity: 1;
+    opacity: 1; !important;
 }
 
 .threep-modal {
