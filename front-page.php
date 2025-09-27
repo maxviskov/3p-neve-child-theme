@@ -384,6 +384,21 @@ function threep_homepage_head_content() {
             margin: 0;
             padding: 0;
         }
+
+        /* Temporary debug styles - add to your front-page.php <style> section */
+.threep-modal-overlay.show {
+    background: rgba(255, 0, 0, 0.5) !important; /* Red background to make it obvious */
+    z-index: 999999 !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.threep-modal {
+    background: yellow !important; /* Make modal very visible */
+    border: 5px solid red !important;
+}
+
     </style>
     <?php
 }
