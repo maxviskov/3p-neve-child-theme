@@ -10,8 +10,8 @@
 
 // Add this at the very top of functions.php after <?php
 error_log('=== FUNCTIONS.PHP LOADED ===');
-error_log('THREEP_EMAIL_SERVICE at functions.php start: ' . (defined('THREEP_EMAIL_SERVICE') ? THREEP_EMAIL_SERVICE : 'NOT DEFINED'));
-error_log('THREEP_MAILCHIMP_API_KEY at functions.php start: ' . (defined('THREEP_MAILCHIMP_API_KEY') ? 'DEFINED' : 'NOT DEFINED'));
+error_log('$threep_email_service at functions.php start: ' . (defined('$threep_email_service') ? $threep_email_service : 'NOT DEFINED'));
+error_log('$threep_mailchimp_api_key at functions.php start: ' . (defined('$threep_mailchimp_api_key') ? 'DEFINED' : 'NOT DEFINED'));
 
 
 // Prevent direct access
@@ -738,7 +738,7 @@ function threep_process_email_subscription($email, $tool_name, $source_page) {
 
     //$service = 'mailchimp'; // Hardcode for testing
     error_log('Calling threep_process_email_subscription()...');
-    error_log('Email service configured as: ' . $service); // Add this line
+    error_log('Email service configured as: ' . $service); 
 
     switch ($service) {
         case 'mailchimp':
@@ -749,6 +749,7 @@ function threep_process_email_subscription($email, $tool_name, $source_page) {
             return threep_subscribe_convertkit($email, $tool_name, $source_page);
             
         case 'custom':
+        error_log('Calling Custom handler');
         default:
             return threep_subscribe_database($email, $tool_name, $source_page);
     }
