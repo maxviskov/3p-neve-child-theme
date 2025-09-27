@@ -390,7 +390,7 @@ function threep_homepage_head_content() {
         /* Make modal very visible */
         
 .threep-modal-overlay.show {
-    background: rgba(255, 0, 0, 0.5) !important; 
+    /*background: rgba(255, 0, 0, 0.5) !important; */
     z-index: 999999 !important;
     display: flex !important;
     visibility: visible !important;
@@ -412,8 +412,8 @@ function threep_homepage_head_content() {
     height: 100%;
     /* background: rgba(0, 0, 0, 0.8); */
     background: rgba(255, 0, 0, 0.5) !important; 
-    z-index: 999999;
-    /* display: none; */
+    /* z-index: 999999;
+     display: none; */
     align-items: center;
     justify-content: center;
     transition: opacity 0.3s ease;
