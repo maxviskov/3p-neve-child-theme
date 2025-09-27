@@ -3,6 +3,7 @@
  * Place this file in /js/notify-me.js in your child theme
  */
 
+
 (function($) {
     'use strict';
 
