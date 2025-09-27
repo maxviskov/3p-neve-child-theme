@@ -8,11 +8,11 @@
 
 
 
-// Remove the immediate debug lines and replace with:
+
 add_action('init', function() {
-    error_log('=== AFTER INIT - CHECKING GLOBALS ===');
-    error_log('threep_email_service: ' . (isset($GLOBALS['threep_email_service']) ? $GLOBALS['threep_email_service'] : 'NOT SET'));
-    error_log('threep_mailchimp_api_key: ' . (isset($GLOBALS['threep_mailchimp_api_key']) && !empty($GLOBALS['threep_mailchimp_api_key']) ? 'SET' : 'NOT SET'));
+    //error_log('=== AFTER INIT - CHECKING GLOBALS ===');
+    //error_log('threep_email_service: ' . (isset($GLOBALS['threep_email_service']) ? $GLOBALS['threep_email_service'] : 'NOT SET'));
+    //error_log('threep_mailchimp_api_key: ' . (isset($GLOBALS['threep_mailchimp_api_key']) && !empty($GLOBALS['threep_mailchimp_api_key']) ? 'SET' : 'NOT SET'));
 });
 
 
