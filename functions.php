@@ -8,8 +8,6 @@
 
 
 define('THREEP_EMAIL_SERVICE', 'mailchimp');
-define('THREEP_MAILCHIMP_API_KEY', defined('THREEP_MAILCHIMP_API_KEY_SECURE') ? THREEP_MAILCHIMP_API_KEY_SECURE : '');
-define('THREEP_MAILCHIMP_LIST_ID', defined('THREEP_MAILCHIMP_LIST_ID_SECURE') ? THREEP_MAILCHIMP_LIST_ID_SECURE : '');
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
