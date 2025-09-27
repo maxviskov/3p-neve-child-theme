@@ -7,7 +7,7 @@
  */
 
 
-define('THREEP_EMAIL_SERVICE', 'mailchimp');
+//define('THREEP_EMAIL_SERVICE', 'mailchimp');
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
