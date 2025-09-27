@@ -609,6 +609,10 @@ get_header(); ?>
             this.reset();
         });
     </script>
+    <script>
+console.log('jQuery loaded:', typeof jQuery !== 'undefined');
+console.log('threep_ajax defined:', typeof threep_ajax !== 'undefined');
+</script>
 </div>
 
 <?php get_footer(); ?>
