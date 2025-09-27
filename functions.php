@@ -657,11 +657,6 @@ add_action('admin_notices', 'flush_ai_engine_data');
  */
 
 // Email service configuration - Edit these at the top of functions.php
-define('THREEP_EMAIL_SERVICE', 'custom'); // Options: 'mailchimp', 'convertkit', 'custom'
-define('THREEP_MAILCHIMP_API_KEY', ''); // Add your Mailchimp API key here
-define('THREEP_MAILCHIMP_LIST_ID', ''); // Add your Mailchimp list ID here
-define('THREEP_CONVERTKIT_API_KEY', ''); // Add your ConvertKit API key here
-define('THREEP_CONVERTKIT_FORM_ID', ''); // Add your ConvertKit form ID here
 
 /**
  * Enqueue notify me button scripts and styles
