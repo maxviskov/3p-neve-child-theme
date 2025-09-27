@@ -7,9 +7,9 @@
  */
 
 
-define('THREEP_EMAIL_SERVICE', 'mailchimp'); // Change from 'custom' to 'mailchimp'
-define('THREEP_MAILCHIMP_API_KEY', '5a23a3e3a25fc926cc311fc82f617f38-us7'); // Paste your API key
-define('THREEP_MAILCHIMP_LIST_ID', '01fe3a35d8'); // Paste your List ID
+define('THREEP_EMAIL_SERVICE', 'mailchimp');
+define('THREEP_MAILCHIMP_API_KEY', defined('THREEP_MAILCHIMP_API_KEY_SECURE') ? THREEP_MAILCHIMP_API_KEY_SECURE : '');
+define('THREEP_MAILCHIMP_LIST_ID', defined('THREEP_MAILCHIMP_LIST_ID_SECURE') ? THREEP_MAILCHIMP_LIST_ID_SECURE : '');
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
