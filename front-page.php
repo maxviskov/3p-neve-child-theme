@@ -579,18 +579,18 @@ get_header(); ?>
 
     <script>
         // Smooth scrolling for navigation links
-        document.querySelectorAll('#threep-homepage a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+        //document.querySelectorAll('#threep-homepage a[href^="#"]').forEach(anchor => {
+        //    anchor.addEventListener('click', function (e) {
+        //        e.preventDefault();
+        //        const target = document.querySelector(this.getAttribute('href'));
+        //        if (target) {
+        //            target.scrollIntoView({
+        //                behavior: 'smooth',
+        //                block: 'start'
+        //            });
+        //        }
+        //    });
+        //});
 
         // Email form handling with analytics tracking
         document.getElementById('newsletterForm').addEventListener('submit', function(e) {

@@ -665,25 +665,28 @@ define('THREEP_CONVERTKIT_FORM_ID', ''); // Add your ConvertKit form ID here
  * Enqueue notify me button scripts and styles
  */
 function threep_notify_me_scripts() {
-    wp_enqueue_script(
-        'threep-notify-me',
-        get_stylesheet_directory_uri() . '/js/notify-me.js',
-        array('jquery'),
-        '1.0.0',
-        true
-    );
-    
-    // Localize script for AJAX
-    wp_localize_script('threep-notify-me', 'threep_ajax', array(
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('threep_notify_me_nonce'),
-        'messages' => array(
-            'success' => 'Thank you! We\'ll notify you when this tool becomes available.',
-            'error' => 'Something went wrong. Please try again.',
-            'invalid_email' => 'Please enter a valid email address.',
-            'already_subscribed' => 'You\'re already on our notification list!'
-        )
-    ));
+    // Only load on pages that need it
+    if (is_front_page() || has_shortcode(get_post()->post_content, 'threep_notify_button')) {
+        wp_enqueue_script(
+            'threep-notify-me',
+            get_stylesheet_directory_uri() . '/js/notify-me.js',
+            array('jquery'),
+            filemtime(get_stylesheet_directory() . '/js/notify-me.js'), // Use file time for cache busting
+            true
+        );
+        
+        // Localize script for AJAX
+        wp_localize_script('threep-notify-me', 'threep_ajax', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('threep_notify_me_nonce'),
+            'messages' => array(
+                'success' => 'Thank you! We\'ll notify you when this tool becomes available.',
+                'error' => 'Something went wrong. Please try again.',
+                'invalid_email' => 'Please enter a valid email address.',
+                'already_subscribed' => 'You\'re already on our notification list!'
+            )
+        ));
+    }
 }
 add_action('wp_enqueue_scripts', 'threep_notify_me_scripts');
 
