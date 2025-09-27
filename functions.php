@@ -8,11 +8,12 @@
 
 
 
-// Add this at the very top of functions.php after <?php
-error_log('=== FUNCTIONS.PHP LOADED ===');
-error_log('$threep_email_service in functions.php: ' . (isset($GLOBALS['$threep_email_service']) && !empty($GLOBALS['$threep_email_service']) ? 'DEFINED' : 'NOT DEFINED'));
-error_log('$threep_mailchimp_api_key in functions.php: ' . (isset($GLOBALS['threep_mailchimp_api_key']) && !empty($GLOBALS['threep_mailchimp_api_key']) ? 'DEFINED' : 'NOT DEFINED'));
-
+// Remove the immediate debug lines and replace with:
+add_action('init', function() {
+    error_log('=== AFTER INIT - CHECKING GLOBALS ===');
+    error_log('threep_email_service: ' . (isset($GLOBALS['threep_email_service']) ? $GLOBALS['threep_email_service'] : 'NOT SET'));
+    error_log('threep_mailchimp_api_key: ' . (isset($GLOBALS['threep_mailchimp_api_key']) && !empty($GLOBALS['threep_mailchimp_api_key']) ? 'SET' : 'NOT SET'));
+});
 
 
 
