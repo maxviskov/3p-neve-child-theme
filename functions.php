@@ -6,8 +6,12 @@
  * Version: 1.0.0
  */
 
-define('THREEP_EMAIL_SERVICE', 'mailchimp'); // or 'convertkit' or 'custom'
-define('THREEP_MAILCHIMP_API_KEY', 'your-key-here');
+
+define('THREEP_EMAIL_SERVICE', 'mailchimp'); // Change from 'custom' to 'mailchimp'
+define('THREEP_MAILCHIMP_API_KEY', '5a23a3e3a25fc926cc311fc82f617f38-us7here'); // Paste your API key
+define('THREEP_MAILCHIMP_LIST_ID', '01fe3a35d8here'); // Paste your List ID
+
+01fe3a35d8
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
