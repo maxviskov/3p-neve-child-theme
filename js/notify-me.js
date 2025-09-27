@@ -3,13 +3,12 @@
  * Place this file in /js/notify-me.js in your child theme
  */
 
-
 (function($) {
     'use strict';
 
-    // Modal HTML template - initially completely hidden
+    // Modal HTML template - simple and functional
     const modalHTML = `
-        <div id="threepNotifyModal" class="threep-modal-overlay" style="display: none !important; visibility: hidden; opacity: 0; z-index: -1;">
+        <div id="threepNotifyModal" class="threep-modal-overlay" style="display: none;">
             <div class="threep-modal">
                 <div class="threep-modal-header">
                     <h3>Get Notified When Available</h3>
@@ -46,21 +45,16 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
-            z-index: -1;
-            display: none !important;
-            visibility: hidden;
-            opacity: 0;
+            z-index: 999999;
+            display: none;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.3s ease, visibility 0.3s ease, z-index 0s linear 0.3s;
+            transition: opacity 0.3s ease;
         }
 
         .threep-modal-overlay.show {
-            z-index: 999999;
             display: flex !important;
-            visibility: visible;
             opacity: 1;
-            transition: opacity 0.3s ease, visibility 0.3s ease, z-index 0s linear 0s;
         }
 
         .threep-modal {
@@ -331,17 +325,8 @@
         console.log('Showing modal'); // Debug log
         const $modal = $('#threepNotifyModal');
         
-        // Ensure modal is completely visible and interactive
-        $modal.css({
-            'display': 'flex',
-            'visibility': 'visible',
-            'z-index': '999999'
-        });
-        
-        // Force reflow for animation
-        $modal[0].offsetHeight;
-        
-        $modal.addClass('show');
+        // Simple show with proper z-index
+        $modal.show().addClass('show');
         $('body').css('overflow', 'hidden');
     }
 
@@ -354,11 +339,7 @@
         $modal.removeClass('show');
         
         setTimeout(function() {
-            $modal.css({
-                'display': 'none',
-                'visibility': 'hidden',
-                'z-index': '-1'
-            });
+            $modal.hide();
             $('body').css('overflow', '');
         }, 300);
     }
