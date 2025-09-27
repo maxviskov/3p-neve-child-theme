@@ -668,21 +668,8 @@ add_action('admin_notices', 'flush_ai_engine_data');
 
 // Add this to functions.php - it will use wp-config values if available, or fall back to these
 
-if (!defined('THREEP_EMAIL_SERVICE')) {
-    define('THREEP_EMAIL_SERVICE', 'custom');
-}
-if (!defined('THREEP_MAILCHIMP_API_KEY')) {
-    define('THREEP_MAILCHIMP_API_KEY', '');
-}
-if (!defined('THREEP_MAILCHIMP_LIST_ID')) {
-    define('THREEP_MAILCHIMP_LIST_ID', '');
-}
-if (!defined('THREEP_CONVERTKIT_API_KEY')) {
-    define('THREEP_CONVERTKIT_API_KEY', '');
-}
-if (!defined('THREEP_CONVERTKIT_FORM_ID')) {
-    define('THREEP_CONVERTKIT_FORM_ID', '');
-}
+
+
 /**
  * Enqueue notify me button scripts and styles
  */
@@ -746,12 +733,16 @@ add_action('wp_ajax_nopriv_threep_notify_me', 'threep_handle_notify_me_subscript
  * Process email subscription based on configured service
  */
 function threep_process_email_subscription($email, $tool_name, $source_page) {
-    //$service = THREEP_EMAIL_SERVICE;
-    $service = 'mailchimp'; // Hardcode for testing
+    $service = $GLOBALS['threep_email_service'];
+    error_log('Email service configured as: ' . $service);
+
+    //$service = 'mailchimp'; // Hardcode for testing
     error_log('Calling threep_process_email_subscription()...');
     error_log('Email service configured as: ' . $service); // Add this line
+
     switch ($service) {
         case 'mailchimp':
+            error_log('Calling Mailchimp handler');
             return threep_subscribe_mailchimp($email, $tool_name, $source_page);
             
         case 'convertkit':
@@ -767,9 +758,10 @@ function threep_process_email_subscription($email, $tool_name, $source_page) {
  * Mailchimp subscription handler
  */
 function threep_subscribe_mailchimp($email, $tool_name, $source_page) {
-    error_log('threep_subscribe_mailchimp()...');
-    $api_key = THREEP_MAILCHIMP_API_KEY;
-    $list_id = THREEP_MAILCHIMP_LIST_ID;
+    
+    error_log('=== ENTERING threep_subscribe_mailchimp ===');
+    $api_key = $GLOBALS['threep_mailchimp_api_key'];
+    $list_id = $GLOBALS['threep_mailchimp_list_id'];    
     
     error_log('Mailchimp API Key present: ' . (!empty($api_key) ? 'Yes' : 'No'));
 
