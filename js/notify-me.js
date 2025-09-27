@@ -6,9 +6,9 @@
 (function($) {
     'use strict';
 
-    // Modal HTML template
+    // Modal HTML template - initially completely hidden
     const modalHTML = `
-        <div id="threepNotifyModal" class="threep-modal-overlay" style="display: none;">
+        <div id="threepNotifyModal" class="threep-modal-overlay" style="display: none !important; visibility: hidden; opacity: 0; z-index: -1;">
             <div class="threep-modal">
                 <div class="threep-modal-header">
                     <h3>Get Notified When Available</h3>
@@ -45,16 +45,21 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
-            z-index: 999999;
-            display: flex !important;
+            z-index: -1;
+            display: none !important;
+            visibility: hidden;
+            opacity: 0;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, visibility 0.3s ease, z-index 0s linear 0.3s;
         }
 
         .threep-modal-overlay.show {
+            z-index: 999999;
+            display: flex !important;
+            visibility: visible;
             opacity: 1;
+            transition: opacity 0.3s ease, visibility 0.3s ease, z-index 0s linear 0s;
         }
 
         .threep-modal {
@@ -240,6 +245,13 @@
         if (!$('#threepNotifyModal').length) {
             $('head').append(modalCSS);
             $('body').append(modalHTML);
+            
+            // Ensure modal is completely hidden on load
+            $('#threepNotifyModal').css({
+                'display': 'none',
+                'visibility': 'hidden',
+                'z-index': '-1'
+            });
         }
 
         // Bind click events to notify buttons
@@ -302,7 +314,13 @@
      */
     function showModal() {
         const $modal = $('#threepNotifyModal');
-        $modal.show();
+        
+        // Ensure modal is completely visible and interactive
+        $modal.css({
+            'display': 'flex',
+            'visibility': 'visible',
+            'z-index': '999999'
+        });
         
         // Force reflow for animation
         $modal[0].offsetHeight;
@@ -319,7 +337,11 @@
         $modal.removeClass('show');
         
         setTimeout(function() {
-            $modal.hide();
+            $modal.css({
+                'display': 'none',
+                'visibility': 'hidden',
+                'z-index': '-1'
+            });
             $('body').css('overflow', '');
         }, 300);
     }
