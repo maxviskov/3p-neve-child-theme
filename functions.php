@@ -739,7 +739,7 @@ add_action('wp_ajax_nopriv_threep_notify_me', 'threep_handle_notify_me_subscript
  */
 function threep_process_email_subscription($email, $tool_name, $source_page) {
     $service = THREEP_EMAIL_SERVICE;
-    error_log('Calling threep_process_email_subscription()...')
+    error_log('Calling threep_process_email_subscription()...');
     error_log('Email service configured as: ' . $service); // Add this line
     switch ($service) {
         case 'mailchimp':
