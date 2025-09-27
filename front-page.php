@@ -459,7 +459,7 @@ get_header(); ?>
                        Notify When Available
                     </a>
                 </div>
-
+                [threep_notify_button tool="Moving Planner"]
                 <!-- Baby Planning - COMING SOON -->
                 <div class="tool-card">
                     <div class="tool-badge coming-soon">Coming Soon</div>
