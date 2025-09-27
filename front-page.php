@@ -764,38 +764,79 @@ get_header(); ?>
         </div>
     </section>
 
-    <script>
-        // Smooth scrolling for navigation links
-        //document.querySelectorAll('#threep-homepage a[href^="#"]').forEach(anchor => {
-        //    anchor.addEventListener('click', function (e) {
-        //        e.preventDefault();
-        //        const target = document.querySelector(this.getAttribute('href'));
-        //        if (target) {
-        //            target.scrollIntoView({
-        //                behavior: 'smooth',
-        //                block: 'start'
-        //            });
-        //        }
-        //    });
-        //});
-
-        // Email form handling with analytics tracking
-        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = this.querySelector('input[type="email"]').value;
-            
-            // Track email signup conversion
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'email_signup', {
-                    'event_category': 'engagement',
-                    'event_label': 'newsletter_signup'
-                });
+<script>
+// Email form handling with real subscription
+document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = this.querySelector('input[type="email"]').value.trim();
+    const submitButton = this.querySelector('.email-button');
+    const originalText = submitButton.textContent;
+    
+    // Validate email
+    if (!email || !isValidEmail(email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+    
+    // Show loading state
+    submitButton.textContent = 'Subscribing...';
+    submitButton.disabled = true;
+    
+    // Check if threep_ajax is available
+    if (typeof threep_ajax === 'undefined') {
+        alert('Configuration error. Please refresh the page and try again.');
+        resetButton();
+        return;
+    }
+    
+    // AJAX request using the same system as notify buttons
+    jQuery.ajax({
+        url: threep_ajax.ajax_url,
+        type: 'POST',
+        data: {
+            action: 'threep_notify_me',
+            email: email,
+            tool_name: 'General Newsletter', // Different from specific tools
+            source_page: window.location.href,
+            nonce: threep_ajax.nonce
+        },
+        success: function(response) {
+            if (response.success) {
+                alert('Thank you for subscribing! We\'ll keep you updated on new tools.');
+                document.getElementById('newsletterForm').reset();
+                
+                // Track email signup conversion
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'email_signup', {
+                        'event_category': 'engagement',
+                        'event_label': 'newsletter_signup'
+                    });
+                }
+            } else {
+                alert(response.data.message || 'Something went wrong. Please try again.');
             }
-            
-            alert('Thank you for subscribing! We\'ll notify you about new tools.');
-            this.reset();
-        });
-    </script>
+        },
+        error: function(xhr, status, error) {
+            console.error('Newsletter AJAX Error:', error);
+            alert('Something went wrong. Please try again.');
+        },
+        complete: function() {
+            // Reset button
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        }
+    });
+});
+
+// Email validation function
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+</script>
+
+
     <script>
 console.log('jQuery loaded:', typeof jQuery !== 'undefined');
 console.log('threep_ajax defined:', typeof threep_ajax !== 'undefined');
