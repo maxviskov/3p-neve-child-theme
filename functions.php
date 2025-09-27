@@ -7,9 +7,17 @@
  */
 
 
-//define('THREEP_EMAIL_SERVICE', 'mailchimp');
+
+// Add this at the very top of functions.php after <?php
+error_log('=== FUNCTIONS.PHP LOADED ===');
+error_log('THREEP_EMAIL_SERVICE at functions.php start: ' . (defined('THREEP_EMAIL_SERVICE') ? THREEP_EMAIL_SERVICE : 'NOT DEFINED'));
+error_log('THREEP_MAILCHIMP_API_KEY at functions.php start: ' . (defined('THREEP_MAILCHIMP_API_KEY') ? 'DEFINED' : 'NOT DEFINED'));
+
 
 // Prevent direct access
+
+
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -738,7 +746,8 @@ add_action('wp_ajax_nopriv_threep_notify_me', 'threep_handle_notify_me_subscript
  * Process email subscription based on configured service
  */
 function threep_process_email_subscription($email, $tool_name, $source_page) {
-    $service = THREEP_EMAIL_SERVICE;
+    //$service = THREEP_EMAIL_SERVICE;
+    $service = 'mailchimp'; // Hardcode for testing
     error_log('Calling threep_process_email_subscription()...');
     error_log('Email service configured as: ' . $service); // Add this line
     switch ($service) {
