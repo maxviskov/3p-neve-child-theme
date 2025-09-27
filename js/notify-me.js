@@ -1,5 +1,5 @@
 /**
- * 3P Life OS - Notify Me Button JavaScript
+ * 3P Life OS - Notify Me Button JavaScript (Fixed Version)
  * Place this file in /js/notify-me.js in your child theme
  */
 
@@ -265,17 +265,25 @@
      * Bind click events to notify me buttons
      */
     function bindNotifyButtons() {
+        // Use event delegation to handle dynamically added buttons
         $(document).on('click', '.threep-notify-button', function(e) {
             e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('Notify button clicked'); // Debug log
             
             currentToolName = $(this).data('tool-name') || 'Unknown Tool';
             currentSourcePage = $(this).data('source-page') || window.location.href;
+            
+            console.log('Tool name:', currentToolName); // Debug log
             
             $('#toolNameDisplay').text(currentToolName);
             $('#notifyEmail').val('');
             $('.threep-notify-message').hide();
             
             showModal();
+            
+            return false;
         });
     }
 
@@ -283,8 +291,14 @@
      * Setup modal event handlers
      */
     function setupModalEvents() {
-        // Close modal events
-        $(document).on('click', '.threep-modal-close, .threep-notify-cancel, .threep-modal-overlay', function(e) {
+        // Close modal events - use event delegation
+        $(document).on('click', '.threep-modal-close, .threep-notify-cancel', function(e) {
+            e.preventDefault();
+            hideModal();
+        });
+        
+        // Close on overlay click
+        $(document).on('click', '.threep-modal-overlay', function(e) {
             if (e.target === this) {
                 hideModal();
             }
@@ -303,7 +317,7 @@
 
         // Escape key to close modal
         $(document).on('keydown', function(e) {
-            if (e.keyCode === 27 && $('#threepNotifyModal').is(':visible')) {
+            if (e.keyCode === 27 && $('#threepNotifyModal').hasClass('show')) {
                 hideModal();
             }
         });
@@ -313,6 +327,7 @@
      * Show modal with animation
      */
     function showModal() {
+        console.log('Showing modal'); // Debug log
         const $modal = $('#threepNotifyModal');
         
         // Ensure modal is completely visible and interactive
@@ -333,6 +348,7 @@
      * Hide modal with animation
      */
     function hideModal() {
+        console.log('Hiding modal'); // Debug log
         const $modal = $('#threepNotifyModal');
         $modal.removeClass('show');
         
@@ -356,9 +372,11 @@
         const $buttonSpinner = $submitBtn.find('.button-spinner');
         const $message = $('.threep-notify-message');
 
+        console.log('Submitting notification for:', email); // Debug log
+
         // Validate email
         if (!email || !isValidEmail(email)) {
-            showMessage(threep_ajax.messages.invalid_email, 'error');
+            showMessage('Please enter a valid email address.', 'error');
             return;
         }
 
@@ -367,6 +385,14 @@
         $buttonText.hide();
         $buttonSpinner.show();
         $message.hide();
+
+        // Check if threep_ajax is available
+        if (typeof threep_ajax === 'undefined') {
+            console.error('threep_ajax not defined');
+            showMessage('Configuration error. Please refresh the page and try again.', 'error');
+            resetButton();
+            return;
+        }
 
         // AJAX request
         $.ajax({
@@ -380,6 +406,7 @@
                 nonce: threep_ajax.nonce
             },
             success: function(response) {
+                console.log('AJAX success:', response); // Debug log
                 if (response.success) {
                     showMessage(response.data.message, 'success');
                     $('#threepNotifyForm')[0].reset();
@@ -399,20 +426,30 @@
                     }, 3000);
                     
                 } else {
-                    showMessage(response.data.message || threep_ajax.messages.error, 'error');
+                    showMessage(response.data.message || 'Something went wrong. Please try again.', 'error');
                 }
             },
             error: function(xhr, status, error) {
-                console.error('Notify Me AJAX Error:', error);
-                showMessage(threep_ajax.messages.error, 'error');
+                console.error('AJAX Error:', error, xhr); // Debug log
+                showMessage('Something went wrong. Please try again.', 'error');
             },
             complete: function() {
-                // Reset button state
-                $submitBtn.prop('disabled', false);
-                $buttonText.show();
-                $buttonSpinner.hide();
+                resetButton();
             }
         });
+    }
+
+    /**
+     * Reset button state
+     */
+    function resetButton() {
+        const $submitBtn = $('.threep-notify-submit');
+        const $buttonText = $submitBtn.find('.button-text');
+        const $buttonSpinner = $submitBtn.find('.button-spinner');
+        
+        $submitBtn.prop('disabled', false);
+        $buttonText.show();
+        $buttonSpinner.hide();
     }
 
     /**
