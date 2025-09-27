@@ -388,7 +388,7 @@ function threep_homepage_head_content() {
         /* Temporary debug styles - add to your front-page.php <style> section */
         /* Red background to make it obvious */
         /* Make modal very visible */
-        
+/*        
 .threep-modal-overlay.show {
     /*background: rgba(255, 0, 0, 0.5) !important; */
     z-index: 999999 !important;
@@ -396,7 +396,7 @@ function threep_homepage_head_content() {
     visibility: visible !important;
     opacity: 1 !important;
 }
-/*
+
 .threep-modal {
     background: yellow !important; 
     border: 5px solid red !important;
@@ -404,26 +404,28 @@ function threep_homepage_head_content() {
 */
 
 /* Notify Me Modal Styles - Add this to your front-page.php <style> section */
+
 .threep-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-     background: rgba(0, 0, 0, 0.8);  !important;
-    /* background: rgba(255, 0, 0, 0.5) !important; */
-    /* z-index: 999999;
-     display: none; */
+    background: rgba(0, 0, 0, 0.8);
+    z-index: -1; /* Hidden by z-index instead of display: none */
+    opacity: 0;
     align-items: center;
     justify-content: center;
     transition: opacity 0.3s ease;
 }
-/*
+
 .threep-modal-overlay.show {
+    z-index: 999999 !important;
     display: flex !important;
-    opacity: 1;
+    opacity: 1 !important;
 }
-*/
+
+
 .threep-modal {
     background: white;
     border-radius: 20px;

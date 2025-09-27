@@ -362,6 +362,7 @@ add_action('init', 'threep_force_ai_engine_routes');
 /**
  * Ensure AI Engine chatbot scripts load properly
  */
+ /*
 function threep_ensure_chatbot_scripts() {
     // Only load on specific pages or if chatbot is needed
     if (is_page_template('page-wedding.php') || 
@@ -395,8 +396,9 @@ function threep_ensure_chatbot_scripts() {
         ');
     }
 }
-add_action('wp_enqueue_scripts', 'threep_ensure_chatbot_scripts', 20);
 
+add_action('wp_enqueue_scripts', 'threep_ensure_chatbot_scripts', 20);
+*/
 /**
  * Add chatbot debugging information for admin users
  */
