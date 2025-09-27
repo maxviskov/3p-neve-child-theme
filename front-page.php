@@ -9,12 +9,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Configuration for email service - Edit these at the top of the file
-define('THREEP_EMAIL_SERVICE', 'custom'); // Options: 'mailchimp', 'convertkit', 'custom'
-define('THREEP_MAILCHIMP_API_KEY', ''); // Add your Mailchimp API key here
-define('THREEP_MAILCHIMP_LIST_ID', ''); // Add your Mailchimp list ID here
-define('THREEP_CONVERTKIT_API_KEY', ''); // Add your ConvertKit API key here
-define('THREEP_CONVERTKIT_FORM_ID', ''); // Add your ConvertKit form ID here
 
 // Add custom head content for this template
 function threep_homepage_head_content() {
@@ -459,7 +453,7 @@ get_header(); ?>
                        Notify When Available
                     </a>
                 </div>
-                [threep_notify_button tool="Moving Planner"]
+                
                 <!-- Baby Planning - COMING SOON -->
                 <div class="tool-card">
                     <div class="tool-badge coming-soon">Coming Soon</div>
