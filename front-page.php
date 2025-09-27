@@ -388,7 +388,7 @@ function threep_homepage_head_content() {
         /* Temporary debug styles - add to your front-page.php <style> section */
         /* Red background to make it obvious */
         /* Make modal very visible */
-        /*
+        
 .threep-modal-overlay.show {
     background: rgba(255, 0, 0, 0.5) !important; 
     z-index: 999999 !important;
@@ -396,7 +396,7 @@ function threep_homepage_head_content() {
     visibility: visible !important;
     opacity: 1 !important;
 }
-*/
+
 .threep-modal {
     background: yellow !important; 
     border: 5px solid red !important;
