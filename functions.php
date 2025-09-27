@@ -649,7 +649,7 @@ function flush_ai_engine_data() {
 add_action('admin_notices', 'flush_ai_engine_data');
 */
 
-**
+/**
  * 3P Life OS - Notify Me Button System
  * Add to functions.php in your 3p-child theme
  */
