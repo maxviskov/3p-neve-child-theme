@@ -776,6 +776,12 @@ function threep_subscribe_mailchimp($email, $tool_name, $source_page) {
         'timeout' => 30
     ));
     
+    // Temporary debug logging
+error_log('Mailchimp API Key present: ' . (!empty($api_key) ? 'Yes' : 'No'));
+error_log('Mailchimp List ID present: ' . (!empty($list_id) ? 'Yes' : 'No'));
+error_log('Mailchimp Response Code: ' . wp_remote_retrieve_response_code($response));
+error_log('Mailchimp Response Body: ' . wp_remote_retrieve_body($response));
+
     if (is_wp_error($response)) {
         // Fallback to database if API fails
         return threep_subscribe_database($email, $tool_name, $source_page);
