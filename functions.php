@@ -739,7 +739,7 @@ add_action('wp_ajax_nopriv_threep_notify_me', 'threep_handle_notify_me_subscript
  */
 function threep_process_email_subscription($email, $tool_name, $source_page) {
     $service = THREEP_EMAIL_SERVICE;
-    
+    error_log('Calling threep_process_email_subscription()...');
     switch ($service) {
         case 'mailchimp':
             return threep_subscribe_mailchimp($email, $tool_name, $source_page);
@@ -757,9 +757,12 @@ function threep_process_email_subscription($email, $tool_name, $source_page) {
  * Mailchimp subscription handler
  */
 function threep_subscribe_mailchimp($email, $tool_name, $source_page) {
+    error_log('threep_subscribe_mailchimp()...');
     $api_key = THREEP_MAILCHIMP_API_KEY;
     $list_id = THREEP_MAILCHIMP_LIST_ID;
     
+    error_log('Mailchimp API Key present: ' . (!empty($api_key) ? 'Yes' : 'No'));
+
     if (empty($api_key) || empty($list_id)) {
         return threep_subscribe_database($email, $tool_name, $source_page);
     }
@@ -787,10 +790,10 @@ function threep_subscribe_mailchimp($email, $tool_name, $source_page) {
     ));
     
     // Temporary debug logging
-error_log('Mailchimp API Key present: ' . (!empty($api_key) ? 'Yes' : 'No'));
-error_log('Mailchimp List ID present: ' . (!empty($list_id) ? 'Yes' : 'No'));
-error_log('Mailchimp Response Code: ' . wp_remote_retrieve_response_code($response));
-error_log('Mailchimp Response Body: ' . wp_remote_retrieve_body($response));
+        error_log('Mailchimp API Key present: ' . (!empty($api_key) ? 'Yes' : 'No'));
+        error_log('Mailchimp List ID present: ' . (!empty($list_id) ? 'Yes' : 'No'));
+        error_log('Mailchimp Response Code: ' . wp_remote_retrieve_response_code($response));
+        error_log('Mailchimp Response Body: ' . wp_remote_retrieve_body($response));
 
     if (is_wp_error($response)) {
         // Fallback to database if API fails
