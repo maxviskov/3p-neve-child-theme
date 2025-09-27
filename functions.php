@@ -658,6 +658,23 @@ add_action('admin_notices', 'flush_ai_engine_data');
 
 // Email service configuration - Edit these at the top of functions.php
 
+// Add this to functions.php - it will use wp-config values if available, or fall back to these
+if (!defined('THREEP_EMAIL_SERVICE')) {
+    define('THREEP_EMAIL_SERVICE', 'custom'); // Fallback to database if wp-config not set
+}
+if (!defined('THREEP_MAILCHIMP_API_KEY')) {
+    define('THREEP_MAILCHIMP_API_KEY', '');
+}
+if (!defined('THREEP_MAILCHIMP_LIST_ID')) {
+    define('THREEP_MAILCHIMP_LIST_ID', '');
+}
+if (!defined('THREEP_CONVERTKIT_API_KEY')) {
+    define('THREEP_CONVERTKIT_API_KEY', '');
+}
+if (!defined('THREEP_CONVERTKIT_FORM_ID')) {
+    define('THREEP_CONVERTKIT_FORM_ID', '');
+}
+
 /**
  * Enqueue notify me button scripts and styles
  */
