@@ -1,13 +1,20 @@
 ﻿<?php
 /*
 Template Name: 3P Life OS Homepage
-Description: Dedicated homepage template for 3P Life Operating System
+Description: Dedicated homepage template for 3P Life Operating System with Notify Me functionality
 */
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
     exit;
 }
+
+// Configuration for email service - Edit these at the top of the file
+define('THREEP_EMAIL_SERVICE', 'custom'); // Options: 'mailchimp', 'convertkit', 'custom'
+define('THREEP_MAILCHIMP_API_KEY', ''); // Add your Mailchimp API key here
+define('THREEP_MAILCHIMP_LIST_ID', ''); // Add your Mailchimp list ID here
+define('THREEP_CONVERTKIT_API_KEY', ''); // Add your ConvertKit API key here
+define('THREEP_CONVERTKIT_FORM_ID', ''); // Add your ConvertKit form ID here
 
 // Add custom head content for this template
 function threep_homepage_head_content() {
@@ -255,7 +262,20 @@ function threep_homepage_head_content() {
         #threep-homepage .tool-button.coming-soon {
             background: #e9ecef;
             color: #6c757d;
-            cursor: not-allowed;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #threep-homepage .tool-button.coming-soon::before {
+            content: '🔔';
+            margin-right: 8px;
+        }
+
+        #threep-homepage .tool-button.coming-soon:hover {
+            background: #dee2e6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         /* Email Signup */
@@ -433,7 +453,11 @@ get_header(); ?>
                         <li>Utility transfer guide</li>
                         <li>Moving day coordination</li>
                     </ul>
-                    <a href="#" class="tool-button coming-soon">Notify When Available</a>
+                    <a href="#" class="tool-button coming-soon threep-notify-button" 
+                       data-tool-name="Moving Planner" 
+                       data-source-page="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+                       Notify When Available
+                    </a>
                 </div>
 
                 <!-- Baby Planning - COMING SOON -->
@@ -449,7 +473,11 @@ get_header(); ?>
                         <li>Budget planning tools</li>
                         <li>Newborn care schedule</li>
                     </ul>
-                    <a href="#" class="tool-button coming-soon">Notify When Available</a>
+                    <a href="#" class="tool-button coming-soon threep-notify-button" 
+                       data-tool-name="Baby Planner" 
+                       data-source-page="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+                       Notify When Available
+                    </a>
                 </div>
 
                 <!-- Home Buying - COMING SOON -->
@@ -465,7 +493,11 @@ get_header(); ?>
                         <li>Inspection checklist</li>
                         <li>Closing preparation</li>
                     </ul>
-                    <a href="#" class="tool-button coming-soon">Notify When Available</a>
+                    <a href="#" class="tool-button coming-soon threep-notify-button" 
+                       data-tool-name="Home Buying Planner" 
+                       data-source-page="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+                       Notify When Available
+                    </a>
                 </div>
 
                 <!-- Event Planning - PAID -->
@@ -481,7 +513,11 @@ get_header(); ?>
                         <li>Guest list management</li>
                         <li>Day-of coordination</li>
                     </ul>
-                    <a href="#" class="tool-button coming-soon">Coming Q4 2025</a>
+                    <a href="#" class="tool-button coming-soon threep-notify-button" 
+                       data-tool-name="Event Planner Pro" 
+                       data-source-page="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+                       Coming Q4 2025
+                    </a>
                 </div>
 
                 <!-- Travel Planning - PAID -->
@@ -497,7 +533,11 @@ get_header(); ?>
                         <li>Safety risk assessment</li>
                         <li>Emergency planning</li>
                     </ul>
-                    <a href="#" class="tool-button coming-soon">Coming Q1 2026</a>
+                    <a href="#" class="tool-button coming-soon threep-notify-button" 
+                       data-tool-name="Travel Planner Pro" 
+                       data-source-page="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+                       Coming Q1 2026
+                    </a>
                 </div>
             </div>
         </div>
@@ -542,98 +582,6 @@ get_header(); ?>
             </div>
         </div>
     </section>
-    
-    
-    <!--
-        <?php echo do_shortcode('[mwai_chatbot id="chatbot-kyjcyq"]'); ?>
-    -->    
-    
-        
-    <!--
-    <div class='mwai-chatbot-container' data-params='{
-    "aiName":"3P Life Assistant: ",
-    "userName":"You: ",
-    "guestName":"Guest: ",
-    "textSend":"Send",
-    "textClear":"Clear",
-    "multiUpload":false,
-    "mode":"chat",
-    "textInputPlaceholder":"Ask about planning...",
-    "textInputMaxLength":512,
-    "textCompliance":"",
-    "startSentence":"Hi! I can help you with planning questions using our 3P approach. What would you like to know?",
-    "localMemory":true,
-    "themeId":"chatgpt",
-    "window":true,
-    "icon":"",
-    "iconText":"💬",
-    "iconTextDelay":1,
-    "iconAlt":"3P Life Assistant",
-    "iconPosition":"bottom-right",
-    "centerOpen":false,
-    "width":"",
-    "openDelay":"",
-    "iconBubble":true,
-    "windowAnimation":"zoom",
-    "fullscreen":false,
-    "copyButton":false,
-    "headerSubtitle":"3P Life Assistant",
-    "containerType":"standard",
-    "headerType":"standard",
-    "messagesType":"standard",
-    "inputType":"standard",
-    "footerType":"standard"
-}' data-system='{
-    "botId":"chatbot-kyjcyq",
-    "customId":"chatbot-kyjcyq",
-    "userData":null,
-    "sessionId":"<?php echo uniqid('3p-'); ?>",
-    "restNonce":"<?php echo wp_create_nonce('wp_rest'); ?>",
-    "contextId":"<?php echo is_page() ? get_the_ID() : 'homepage'; ?>",
-    "pluginUrl":"<?php echo plugins_url('ai-engine/'); ?>",
-    "restUrl":"<?php echo get_rest_url(); ?>",
-    "stream":true,
-    "debugMode":false,
-    "eventLogs":true,
-    "speech_recognition":false,
-    "speech_synthesis":false,
-    "typewriter":false,
-    "crossSite":false,
-    "actions":[],
-    "blocks":[],
-    "shortcuts":[]
-}' data-theme='{
-    "type":"internal",
-    "name":"ChatGPT",
-    "themeId":"chatgpt",
-    "settings":[],
-    "style":""
-}'></div>
--->
-
-<?php if (current_user_can('manage_options') && isset($_GET['chatbot_check'])): ?>
-<div style="position: fixed; top: 10px; left: 10px; background: #333; color: white; padding: 15px; z-index: 9999; font-family: monospace; font-size: 12px; max-width: 400px;">
-    <h4 style="color: white; margin: 0 0 10px 0;">Chatbot Status Check</h4>
-    <div>✅ Page template: <?php echo basename(get_page_template()); ?></div>
-    <div>✅ Current page ID: <?php echo get_the_ID(); ?></div>
-    <div>✅ REST URL: <?php echo get_rest_url(); ?></div>
-    <div>✅ Nonce generated: <?php echo wp_create_nonce('wp_rest') ? 'Yes' : 'No'; ?></div>
-    <div>✅ AI Engine shortcode exists: <?php echo shortcode_exists('mwai_chatbot') ? 'Yes' : 'No'; ?></div>
-    
-    <?php 
-    $chatbots = get_option('mwai_chatbots', []);
-    if (!empty($chatbots)):
-    ?>
-    <div>✅ Available chatbot IDs:</div>
-    <?php foreach (array_keys($chatbots) as $bot_id): ?>
-        <div style="margin-left: 20px;">- <?php echo esc_html($bot_id); ?></div>
-    <?php endforeach; ?>
-    <?php else: ?>
-    <div>❌ No chatbots configured in AI Engine</div>
-    <?php endif; ?>
-</div>
-<?php endif; ?>
-
 
     <script>
         // Smooth scrolling for navigation links
@@ -665,16 +613,6 @@ get_header(); ?>
             
             alert('Thank you for subscribing! We\'ll notify you about new tools.');
             this.reset();
-        });
-
-        // Coming soon button handling
-        document.querySelectorAll('#threep-homepage .tool-button.coming-soon').forEach(button => {
-            if (button.textContent === 'Notify When Available') {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    alert('We\'ll add you to our notification list for this tool!');
-                });
-            }
         });
     </script>
 </div>

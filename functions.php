@@ -6,6 +6,9 @@
  * Version: 1.0.0
  */
 
+define('THREEP_EMAIL_SERVICE', 'mailchimp'); // or 'convertkit' or 'custom'
+define('THREEP_MAILCHIMP_API_KEY', 'your-key-here');
+
 // Prevent direct access
 if (!defined('ABSPATH')) {
     exit;
@@ -645,3 +648,753 @@ function flush_ai_engine_data() {
 }
 add_action('admin_notices', 'flush_ai_engine_data');
 */
+
+**
+ * 3P Life OS - Notify Me Button System
+ * Add to functions.php in your 3p-child theme
+ */
+
+// Email service configuration - Edit these at the top of functions.php
+define('THREEP_EMAIL_SERVICE', 'custom'); // Options: 'mailchimp', 'convertkit', 'custom'
+define('THREEP_MAILCHIMP_API_KEY', ''); // Add your Mailchimp API key here
+define('THREEP_MAILCHIMP_LIST_ID', ''); // Add your Mailchimp list ID here
+define('THREEP_CONVERTKIT_API_KEY', ''); // Add your ConvertKit API key here
+define('THREEP_CONVERTKIT_FORM_ID', ''); // Add your ConvertKit form ID here
+
+/**
+ * Enqueue notify me button scripts and styles
+ */
+function threep_notify_me_scripts() {
+    wp_enqueue_script(
+        'threep-notify-me',
+        get_stylesheet_directory_uri() . '/js/notify-me.js',
+        array('jquery'),
+        '1.0.0',
+        true
+    );
+    
+    // Localize script for AJAX
+    wp_localize_script('threep-notify-me', 'threep_ajax', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('threep_notify_me_nonce'),
+        'messages' => array(
+            'success' => 'Thank you! We\'ll notify you when this tool becomes available.',
+            'error' => 'Something went wrong. Please try again.',
+            'invalid_email' => 'Please enter a valid email address.',
+            'already_subscribed' => 'You\'re already on our notification list!'
+        )
+    ));
+}
+add_action('wp_enqueue_scripts', 'threep_notify_me_scripts');
+
+/**
+ * AJAX handler for notify me subscriptions
+ */
+function threep_handle_notify_me_subscription() {
+    // Verify nonce for security
+    if (!wp_verify_nonce($_POST['nonce'], 'threep_notify_me_nonce')) {
+        wp_die(json_encode(array('success' => false, 'message' => 'Security check failed')));
+    }
+    
+    $email = sanitize_email($_POST['email']);
+    $tool_name = sanitize_text_field($_POST['tool_name']);
+    $source_page = sanitize_url($_POST['source_page']);
+    
+    // Validate email
+    if (!is_email($email)) {
+        wp_send_json_error(array('message' => 'Please enter a valid email address.'));
+    }
+    
+    // Process subscription based on configured service
+    $result = threep_process_email_subscription($email, $tool_name, $source_page);
+    
+    if ($result['success']) {
+        wp_send_json_success(array('message' => $result['message']));
+    } else {
+        wp_send_json_error(array('message' => $result['message']));
+    }
+}
+add_action('wp_ajax_threep_notify_me', 'threep_handle_notify_me_subscription');
+add_action('wp_ajax_nopriv_threep_notify_me', 'threep_handle_notify_me_subscription');
+
+/**
+ * Process email subscription based on configured service
+ */
+function threep_process_email_subscription($email, $tool_name, $source_page) {
+    $service = THREEP_EMAIL_SERVICE;
+    
+    switch ($service) {
+        case 'mailchimp':
+            return threep_subscribe_mailchimp($email, $tool_name, $source_page);
+            
+        case 'convertkit':
+            return threep_subscribe_convertkit($email, $tool_name, $source_page);
+            
+        case 'custom':
+        default:
+            return threep_subscribe_database($email, $tool_name, $source_page);
+    }
+}
+
+/**
+ * Mailchimp subscription handler
+ */
+function threep_subscribe_mailchimp($email, $tool_name, $source_page) {
+    $api_key = THREEP_MAILCHIMP_API_KEY;
+    $list_id = THREEP_MAILCHIMP_LIST_ID;
+    
+    if (empty($api_key) || empty($list_id)) {
+        return threep_subscribe_database($email, $tool_name, $source_page);
+    }
+    
+    $datacenter = substr($api_key, strpos($api_key, '-') + 1);
+    $url = "https://{$datacenter}.api.mailchimp.com/3.0/lists/{$list_id}/members";
+    
+    $data = array(
+        'email_address' => $email,
+        'status' => 'subscribed',
+        'merge_fields' => array(
+            'TOOLNAME' => $tool_name,
+            'SOURCE' => $source_page
+        ),
+        'tags' => array('3P-Tools', 'Notify-Me', $tool_name)
+    );
+    
+    $response = wp_remote_post($url, array(
+        'headers' => array(
+            'Authorization' => 'Basic ' . base64_encode('user:' . $api_key),
+            'Content-Type' => 'application/json'
+        ),
+        'body' => json_encode($data),
+        'timeout' => 30
+    ));
+    
+    if (is_wp_error($response)) {
+        // Fallback to database if API fails
+        return threep_subscribe_database($email, $tool_name, $source_page);
+    }
+    
+    $response_code = wp_remote_retrieve_response_code($response);
+    
+    if ($response_code === 200) {
+        return array(
+            'success' => true,
+            'message' => 'Thank you! We\'ll notify you when this tool becomes available.'
+        );
+    } elseif ($response_code === 400) {
+        $body = json_decode(wp_remote_retrieve_body($response), true);
+        if (isset($body['title']) && $body['title'] === 'Member Exists') {
+            return array(
+                'success' => true,
+                'message' => 'You\'re already on our notification list!'
+            );
+        }
+    }
+    
+    // Fallback to database if Mailchimp fails
+    return threep_subscribe_database($email, $tool_name, $source_page);
+}
+
+/**
+ * ConvertKit subscription handler
+ */
+function threep_subscribe_convertkit($email, $tool_name, $source_page) {
+    $api_key = THREEP_CONVERTKIT_API_KEY;
+    $form_id = THREEP_CONVERTKIT_FORM_ID;
+    
+    if (empty($api_key) || empty($form_id)) {
+        return threep_subscribe_database($email, $tool_name, $source_page);
+    }
+    
+    $url = "https://api.convertkit.com/v3/forms/{$form_id}/subscribe";
+    
+    $data = array(
+        'api_key' => $api_key,
+        'email' => $email,
+        'fields' => array(
+            'tool_name' => $tool_name,
+            'source_page' => $source_page
+        ),
+        'tags' => array('3P-Tools', 'Notify-Me', $tool_name)
+    );
+    
+    $response = wp_remote_post($url, array(
+        'headers' => array(
+            'Content-Type' => 'application/json'
+        ),
+        'body' => json_encode($data),
+        'timeout' => 30
+    ));
+    
+    if (is_wp_error($response)) {
+        return threep_subscribe_database($email, $tool_name, $source_page);
+    }
+    
+    $response_code = wp_remote_retrieve_response_code($response);
+    
+    if ($response_code === 200 || $response_code === 201) {
+        return array(
+            'success' => true,
+            'message' => 'Thank you! We\'ll notify you when this tool becomes available.'
+        );
+    }
+    
+    // Fallback to database if ConvertKit fails
+    return threep_subscribe_database($email, $tool_name, $source_page);
+}
+
+/**
+ * Database subscription handler (fallback or custom)
+ */
+function threep_subscribe_database($email, $tool_name, $source_page) {
+    global $wpdb;
+    
+    $table_name = $wpdb->prefix . 'threep_notify_subscriptions';
+    
+    // Create table if it doesn't exist
+    threep_create_subscriptions_table();
+    
+    // Check if email already exists for this tool
+    $existing = $wpdb->get_row($wpdb->prepare(
+        "SELECT * FROM $table_name WHERE email = %s AND tool_name = %s",
+        $email, $tool_name
+    ));
+    
+    if ($existing) {
+        return array(
+            'success' => true,
+            'message' => 'You\'re already on our notification list!'
+        );
+    }
+    
+    // Insert new subscription
+    $result = $wpdb->insert(
+        $table_name,
+        array(
+            'email' => $email,
+            'tool_name' => $tool_name,
+            'source_page' => $source_page,
+            'created_at' => current_time('mysql'),
+            'status' => 'subscribed'
+        ),
+        array('%s', '%s', '%s', '%s', '%s')
+    );
+    
+    if ($result !== false) {
+        // Send confirmation email
+        threep_send_confirmation_email($email, $tool_name);
+        
+        return array(
+            'success' => true,
+            'message' => 'Thank you! We\'ll notify you when this tool becomes available.'
+        );
+    }
+    
+    return array(
+        'success' => false,
+        'message' => 'Something went wrong. Please try again.'
+    );
+}
+
+/**
+ * Create subscriptions table
+ */
+function threep_create_subscriptions_table() {
+    global $wpdb;
+    
+    $table_name = $wpdb->prefix . 'threep_notify_subscriptions';
+    
+    $charset_collate = $wpdb->get_charset_collate();
+    
+    $sql = "CREATE TABLE $table_name (
+        id int(11) NOT NULL AUTO_INCREMENT,
+        email varchar(255) NOT NULL,
+        tool_name varchar(255) NOT NULL,
+        source_page varchar(255),
+        created_at datetime DEFAULT CURRENT_TIMESTAMP,
+        status varchar(50) DEFAULT 'subscribed',
+        PRIMARY KEY (id),
+        KEY email (email),
+        KEY tool_name (tool_name)
+    ) $charset_collate;";
+    
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+}
+
+/**
+ * Send confirmation email
+ */
+function threep_send_confirmation_email($email, $tool_name) {
+    $subject = '3P Life OS - Notification Confirmed for ' . $tool_name;
+    $message = "Hi there!\n\nThank you for your interest in our {$tool_name} tool.\n\nWe'll notify you as soon as it becomes available. In the meantime, check out our free Wedding Planner tool at " . home_url('/wedding/') . "\n\nBest regards,\nThe 3P Life OS Team";
+    
+    wp_mail($email, $subject, $message);
+}
+
+/**
+ * Render notify me button
+ * Usage: echo threep_render_notify_button('Moving Planner', 'Notify When Available');
+ */
+function threep_render_notify_button($tool_name, $button_text = 'Notify When Available', $button_class = 'tool-button coming-soon') {
+    $button_id = 'notify-' . sanitize_title($tool_name);
+    
+    ob_start();
+    ?>
+    <a href="#" 
+       class="<?php echo esc_attr($button_class); ?> threep-notify-button" 
+       id="<?php echo esc_attr($button_id); ?>"
+       data-tool-name="<?php echo esc_attr($tool_name); ?>"
+       data-source-page="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+        <?php echo esc_html($button_text); ?>
+    </a>
+    <?php
+    return ob_get_clean();
+}
+
+/**
+ * Admin menu for managing subscriptions
+ */
+function threep_add_admin_menu() {
+    add_management_page(
+        '3P Notify Me Subscriptions',
+        '3P Subscriptions',
+        'manage_options',
+        'threep-subscriptions',
+        'threep_admin_page'
+    );
+}
+add_action('admin_menu', 'threep_add_admin_menu');
+
+/**
+ * Admin page content
+ */
+function threep_admin_page() {
+    global $wpdb;
+    
+    $table_name = $wpdb->prefix . 'threep_notify_subscriptions';
+    
+    // Handle export
+    if (isset($_GET['export']) && $_GET['export'] === 'csv') {
+        threep_export_subscriptions();
+        return;
+    }
+    
+    // Get subscriptions with pagination
+    $page = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
+    $per_page = 20;
+    $offset = ($page - 1) * $per_page;
+    
+    $total = $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
+    $subscriptions = $wpdb->get_results($wpdb->prepare(
+        "SELECT * FROM $table_name ORDER BY created_at DESC LIMIT %d OFFSET %d",
+        $per_page, $offset
+    ));
+    
+    // Get tool stats
+    $tool_stats = $wpdb->get_results(
+        "SELECT tool_name, COUNT(*) as count FROM $table_name WHERE status = 'subscribed' GROUP BY tool_name ORDER BY count DESC"
+    );
+    
+    ?>
+    <div class="wrap">
+        <h1>3P Notify Me Subscriptions</h1>
+        
+        <!-- Stats Summary -->
+        <div class="notice notice-info" style="padding: 15px; margin: 20px 0;">
+            <h3>Subscription Stats</h3>
+            <p><strong>Total Active Subscriptions:</strong> <?php echo $total; ?></p>
+            
+            <?php if ($tool_stats): ?>
+            <table class="wp-list-table widefat striped" style="max-width: 500px; margin-top: 10px;">
+                <thead>
+                    <tr>
+                        <th>Tool Name</th>
+                        <th>Subscribers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($tool_stats as $stat): ?>
+                    <tr>
+                        <td><?php echo esc_html($stat->tool_name); ?></td>
+                        <td><?php echo esc_html($stat->count); ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php endif; ?>
+        </div>
+        
+        <!-- Export Button -->
+        <p class="submit">
+            <a href="<?php echo admin_url('tools.php?page=threep-subscriptions&export=csv'); ?>" 
+               class="button button-secondary">Export to CSV</a>
+        </p>
+        
+        <!-- Subscriptions Table -->
+        <table class="wp-list-table widefat striped">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Tool Name</th>
+                    <th>Source Page</th>
+                    <th>Date Subscribed</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($subscriptions): ?>
+                    <?php foreach ($subscriptions as $sub): ?>
+                    <tr>
+                        <td><?php echo esc_html($sub->email); ?></td>
+                        <td><?php echo esc_html($sub->tool_name); ?></td>
+                        <td><?php echo esc_html($sub->source_page); ?></td>
+                        <td><?php echo esc_html(date('M j, Y g:i A', strtotime($sub->created_at))); ?></td>
+                        <td><?php echo esc_html($sub->status); ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5">No subscriptions found.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+        
+        <!-- Pagination -->
+        <?php
+        $total_pages = ceil($total / $per_page);
+        if ($total_pages > 1):
+        ?>
+        <div class="tablenav bottom">
+            <div class="tablenav-pages">
+                <?php
+                echo paginate_links(array(
+                    'base' => add_query_arg('paged', '%#%'),
+                    'format' => '',
+                    'prev_text' => '&laquo;',
+                    'next_text' => '&raquo;',
+                    'total' => $total_pages,
+                    'current' => $page
+                ));
+                ?>
+            </div>
+        </div>
+        <?php endif; ?>
+    </div>
+    <?php
+}
+
+/**
+ * Export subscriptions to CSV
+ */
+function threep_export_subscriptions() {
+    global $wpdb;
+    
+    $table_name = $wpdb->prefix . 'threep_notify_subscriptions';
+    $subscriptions = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC");
+    
+    $filename = '3p-subscriptions-' . date('Y-m-d') . '.csv';
+    
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    
+    $output = fopen('php://output', 'w');
+    
+    // Add CSV headers
+    fputcsv($output, array('Email', 'Tool Name', 'Source Page', 'Date Subscribed', 'Status'));
+    
+    // Add data
+    foreach ($subscriptions as $sub) {
+        fputcsv($output, array(
+            $sub->email,
+            $sub->tool_name,
+            $sub->source_page,
+            $sub->created_at,
+            $sub->status
+        ));
+    }
+    
+    fclose($output);
+    exit;
+}
+
+/**
+ * Create database table on theme activation
+ */
+function threep_activate_notify_system() {
+    threep_create_subscriptions_table();
+}
+// Hook to init for safety since we can't hook to theme activation directly
+add_action('init', function() {
+    if (get_option('threep_notify_db_created') !== '1') {
+        threep_create_subscriptions_table();
+        update_option('threep_notify_db_created', '1');
+    }
+});
+
+/**
+ * Add custom CSS for admin notifications
+ */
+function threep_admin_notices_styles() {
+    if (isset($_GET['page']) && $_GET['page'] === 'threep-subscriptions') {
+        ?>
+        <style>
+        .threep-stats-card {
+            background: #fff;
+            border: 1px solid #ccd0d4;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 1px 1px rgba(0,0,0,.04);
+        }
+        .threep-stats-card h3 {
+            margin-top: 0;
+            color: #23282d;
+        }
+        .threep-stat-item {
+            display: inline-block;
+            margin-right: 30px;
+            padding: 10px 0;
+        }
+        .threep-stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #0073aa;
+            display: block;
+        }
+        .threep-stat-label {
+            color: #646970;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .threep-tool-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .threep-tool-stat {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .threep-tool-stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d63384;
+        }
+        .threep-tool-stat-name {
+            font-size: 12px;
+            color: #646970;
+            margin-top: 5px;
+        }
+        </style>
+        <?php
+    }
+}
+add_action('admin_head', 'threep_admin_notices_styles');
+
+/**
+ * Send notification emails when tools become available
+ */
+function threep_send_tool_launch_notifications($tool_name, $tool_url, $message = '') {
+    global $wpdb;
+    
+    $table_name = $wpdb->prefix . 'threep_notify_subscriptions';
+    
+    // Get all subscribers for this tool
+    $subscribers = $wpdb->get_results($wpdb->prepare(
+        "SELECT * FROM $table_name WHERE tool_name = %s AND status = 'subscribed'",
+        $tool_name
+    ));
+    
+    if (empty($subscribers)) {
+        return false;
+    }
+    
+    $subject = "🎉 {$tool_name} is Now Available - 3P Life OS";
+    
+    $default_message = "Great news! The {$tool_name} you requested is now available.\n\n";
+    $default_message .= "Start using it now: {$tool_url}\n\n";
+    $default_message .= "Thank you for your patience, and we hope this tool helps you master your life projects!\n\n";
+    $default_message .= "Best regards,\nThe 3P Life OS Team\n\n";
+    $default_message .= "P.S. Check out all our available tools at " . home_url();
+    
+    $email_message = !empty($message) ? $message : $default_message;
+    
+    $sent_count = 0;
+    
+    foreach ($subscribers as $subscriber) {
+        $sent = wp_mail($subscriber->email, $subject, $email_message);
+        if ($sent) {
+            $sent_count++;
+            
+            // Update subscriber status to 'notified'
+            $wpdb->update(
+                $table_name,
+                array('status' => 'notified'),
+                array('id' => $subscriber->id),
+                array('%s'),
+                array('%d')
+            );
+        }
+    }
+    
+    return $sent_count;
+}
+
+/**
+ * Add tool launch notification functionality to admin
+ */
+function threep_add_tool_launch_submenu() {
+    add_submenu_page(
+        'tools.php',
+        'Launch Tool Notification',
+        'Launch Notification',
+        'manage_options',
+        'threep-launch-notification',
+        'threep_launch_notification_page'
+    );
+}
+add_action('admin_menu', 'threep_add_tool_launch_submenu');
+
+/**
+ * Tool launch notification admin page
+ */
+function threep_launch_notification_page() {
+    global $wpdb;
+    
+    $table_name = $wpdb->prefix . 'threep_notify_subscriptions';
+    
+    // Handle form submission
+    if (isset($_POST['send_notifications']) && wp_verify_nonce($_POST['threep_launch_nonce'], 'send_launch_notification')) {
+        $tool_name = sanitize_text_field($_POST['tool_name']);
+        $tool_url = esc_url_raw($_POST['tool_url']);
+        $custom_message = sanitize_textarea_field($_POST['custom_message']);
+        
+        $sent_count = threep_send_tool_launch_notifications($tool_name, $tool_url, $custom_message);
+        
+        if ($sent_count > 0) {
+            echo '<div class="notice notice-success"><p>Successfully sent notifications to ' . $sent_count . ' subscribers!</p></div>';
+        } else {
+            echo '<div class="notice notice-warning"><p>No notifications were sent. Check if there are subscribers for this tool.</p></div>';
+        }
+    }
+    
+    // Get available tools with subscriber counts
+    $tools_with_subs = $wpdb->get_results(
+        "SELECT tool_name, COUNT(*) as subscriber_count 
+         FROM $table_name 
+         WHERE status = 'subscribed' 
+         GROUP BY tool_name 
+         ORDER BY subscriber_count DESC"
+    );
+    
+    ?>
+    <div class="wrap">
+        <h1>Send Tool Launch Notifications</h1>
+        <p>When you launch a new tool, use this page to notify all subscribers who requested to be notified.</p>
+        
+        <?php if (!empty($tools_with_subs)): ?>
+        <form method="post" action="">
+            <?php wp_nonce_field('send_launch_notification', 'threep_launch_nonce'); ?>
+            
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><label for="tool_name">Tool Name</label></th>
+                    <td>
+                        <select name="tool_name" id="tool_name" class="regular-text" required>
+                            <option value="">Select a tool...</option>
+                            <?php foreach ($tools_with_subs as $tool): ?>
+                                <option value="<?php echo esc_attr($tool->tool_name); ?>">
+                                    <?php echo esc_html($tool->tool_name); ?> (<?php echo $tool->subscriber_count; ?> subscribers)
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <p class="description">Choose the tool you're launching</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="tool_url">Tool URL</label></th>
+                    <td>
+                        <input type="url" name="tool_url" id="tool_url" class="regular-text" required 
+                               placeholder="https://planner.maxviskov.com/moving/" />
+                        <p class="description">The direct link to the new tool</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="custom_message">Custom Message (Optional)</label></th>
+                    <td>
+                        <textarea name="custom_message" id="custom_message" rows="10" cols="50" class="large-text">Great news! The {tool_name} you requested is now available.
+
+Start using it now: {tool_url}
+
+Thank you for your patience, and we hope this tool helps you master your life projects!
+
+Best regards,
+The 3P Life OS Team
+
+P.S. Check out all our available tools at <?php echo home_url(); ?></textarea>
+                        <p class="description">Leave empty to use default message. Use {tool_name} and {tool_url} as placeholders.</p>
+                    </td>
+                </tr>
+            </table>
+            
+            <p class="submit">
+                <input type="submit" name="send_notifications" class="button-primary" 
+                       value="Send Launch Notifications" 
+                       onclick="return confirm('Are you sure you want to send notifications? This action cannot be undone.');" />
+            </p>
+        </form>
+        
+        <?php else: ?>
+        <div class="notice notice-info">
+            <p>No tools have subscribers yet. Subscribers will appear here once people start signing up for notifications.</p>
+        </div>
+        <?php endif; ?>
+    </div>
+    <?php
+}
+
+/**
+ * Shortcode for notify button
+ * Usage: [threep_notify_button tool="Moving Planner" text="Notify Me"]
+ */
+function threep_notify_button_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'tool' => 'Unknown Tool',
+        'text' => 'Notify When Available',
+        'class' => 'tool-button coming-soon'
+    ), $atts);
+    
+    return threep_render_notify_button($atts['tool'], $atts['text'], $atts['class']);
+}
+add_shortcode('threep_notify_button', 'threep_notify_button_shortcode');
+
+/**
+ * Add notification count to admin bar
+ */
+function threep_admin_bar_notification_count($wp_admin_bar) {
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+    
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'threep_notify_subscriptions';
+    $count = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE status = 'subscribed'");
+    
+    if ($count > 0) {
+        $wp_admin_bar->add_node(array(
+            'id' => 'threep-notify-count',
+            'title' => '🔔 ' . $count . ' Subscribers',
+            'href' => admin_url('tools.php?page=threep-subscriptions'),
+            'meta' => array(
+                'title' => '3P Tool Notification Subscribers'
+            )
+        ));
+    }
+}
+add_action('admin_bar_menu', 'threep_admin_bar_notification_count', 100);
