@@ -38,7 +38,8 @@ function threep_homepage_head_content() {
 
         /* Hero Section */
         #threep-homepage .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/ 
+            background: linear-gradient(135deg, #3EF0E4 0%, #60BFB9 100%);
             color: white;
             padding: 120px 0 80px;
             text-align: center;
