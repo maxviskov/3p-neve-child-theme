@@ -40,7 +40,8 @@ function threep_homepage_head_content() {
         #threep-homepage .hero {
             /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/ 
             /* background: linear-gradient(135deg, #3EF0E4 0%, #60BFB9 100%); */
-            background: linear-gradient(81D4D0, #60BFB9 0%, #5D9693 100%);
+            /* background: linear-gradient(81D4D0, #60BFB9 0%, #5D9693 100%); */
+            background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
             color: white;
             padding: 120px 0 80px;
             text-align: center;
