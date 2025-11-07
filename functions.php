@@ -1430,3 +1430,36 @@ function threep_admin_bar_notification_count($wp_admin_bar) {
     }
 }
 add_action('admin_bar_menu', 'threep_admin_bar_notification_count', 100);
+
+
+/**
+ * Add Pinterest Tag to website header
+ */
+function threep_add_pinterest_tag() {
+    // Only add on frontend, not admin
+    if (is_admin()) {
+        return;
+    }
+    
+    // Replace with your actual Pinterest Tag ID
+    $pinterest_tag_id = '2612409326610';
+    ?>
+    <!-- Pinterest Tag -->
+    <script>
+    !function(e){if(!window.pintrk){window.pintrk = function () {
+    window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
+      n=window.pintrk;n.queue=[],n.version="3.0";var
+      t=document.createElement("script");t.async=!0,t.src=e;var
+      r=document.getElementsByTagName("script")[0];
+      r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
+    pintrk('load', '<?php echo esc_js($pinterest_tag_id); ?>', {em: '<user_email_address>'});
+    pintrk('page');
+    </script>
+    <noscript>
+    <img height="1" width="1" style="display:none;" alt=""
+      src="https://ct.pinterest.com/v3/?event=init&tid=<?php echo esc_attr($pinterest_tag_id); ?>&pd[em]=<hashed_email_address>&noscript=1" />
+    </noscript>
+    <!-- end Pinterest Tag -->
+    <?php
+}
+add_action('wp_head', 'threep_add_pinterest_tag');
