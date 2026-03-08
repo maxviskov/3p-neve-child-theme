@@ -700,7 +700,7 @@ get_header(); ?>
                     <a href="#" class="tool-button coming-soon threep-notify-button" 
                        data-tool-name="Event Planner Pro" 
                        data-source-page="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
-                       Coming Q4 2025
+                       Coming Q2 2026
                     </a>
                 </div>
 
@@ -720,7 +720,7 @@ get_header(); ?>
                     <a href="#" class="tool-button coming-soon threep-notify-button" 
                        data-tool-name="Travel Planner Pro" 
                        data-source-page="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
-                       Coming Q1 2026
+                       Coming Q3 2026
                     </a>
                 </div>
             </div>
