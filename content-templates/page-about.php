@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 // Add custom head content for this template
 function threep_about_head_content() {
     ?>
-    <meta name="description" content="Learn about Max Viskov and the revolutionary 3P Life Operating System that helps people plan, protect, and perform their most important life projects.">
+    <meta name="description" content="Learn about Max Koff and the revolutionary 3P Life Operating System that helps people plan, protect, and perform their most important life projects.">
     
     <style>
         /* Reset and Base Styles for 3P About Page */
@@ -388,8 +388,8 @@ get_header(); ?>
                 </div>
                 
                 <div class="profile-card">
-                    <div class="profile-image">MV</div>
-                    <div class="profile-name">Max Viskov</div>
+                    <div class="profile-image">MK</div>
+                    <div class="profile-name">Max Koff</div>
                     <div class="profile-title">Creator of 3P Life Operating System™</div>
                     <div class="profile-credentials">
                         Business Consultant • Project Management Expert<br>

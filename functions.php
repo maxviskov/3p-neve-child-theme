@@ -1353,7 +1353,7 @@ function threep_launch_notification_page() {
                     <th scope="row"><label for="tool_url">Tool URL</label></th>
                     <td>
                         <input type="url" name="tool_url" id="tool_url" class="regular-text" required 
-                               placeholder="https://planner.maxviskov.com/moving/" />
+                               placeholder="https://planner.maxkoff.com/moving/" />
                         <p class="description">The direct link to the new tool</p>
                     </td>
                 </tr>

@@ -267,9 +267,9 @@ if (isset($_GET['resent']) && $_GET['resent'] === 'success') {
             If you're still not receiving your wedding plan email, here are some common solutions:
         </p>
         <ul style="color: #856404; margin: 10px 0;">
-            <li><strong>Check your spam folder</strong> - Look for emails from "noreply@planner.maxviskov.com"</li>
+            <li><strong>Check your spam folder</strong> - Look for emails from "noreply@planner.maxkoff.com"</li>
             <li><strong>Check your promotions tab</strong> (Gmail users)</li>
-            <li><strong>Add our domain to your safe senders list</strong> - planner.maxviskov.com</li>
+            <li><strong>Add our domain to your safe senders list</strong> - planner.maxkoff.com</li>
             <li><strong>Try a different email address</strong> - Corporate emails sometimes block automated messages</li>
         </ul>
         <p style="color: #856404; margin-bottom: 0;">

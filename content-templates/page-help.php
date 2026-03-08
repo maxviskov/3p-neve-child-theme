@@ -3,7 +3,7 @@
 Template Name: 3P Life OS Dynamic Help System
 Description: Scalable help system with tool-specific content and dropdown navigation
 Version: 2.0
-Author: Max Viskov - 3P Life OS
+Author: Max Koff - 3P Life OS
 */
 
 get_header(); ?>
@@ -75,10 +75,10 @@ get_header(); ?>
                     <div class="faq-answer">
                         <p>If you haven't received your personalized plan within 30 minutes:</p>
                         <ol>
-                            <li><strong>Check your spam folder:</strong> Look for emails from "noreply@planner.maxviskov.com"</li>
+                            <li><strong>Check your spam folder:</strong> Look for emails from "noreply@planner.maxkoff.com"</li>
                             <li><strong>Check your promotions tab:</strong> Gmail users should check the Promotions tab</li>
                             <li><strong>Verify your email address:</strong> Make sure you entered it correctly during the survey</li>
-                            <li><strong>Whitelist our domain:</strong> Add planner.maxviskov.com to your safe senders list</li>
+                            <li><strong>Whitelist our domain:</strong> Add planner.maxkoff.com to your safe senders list</li>
                             <li><strong>Try the resend function:</strong> Visit <a href="/resend">/resend</a> to request another copy</li>
                         </ol>
                     </div>
@@ -118,11 +118,11 @@ get_header(); ?>
                 </div>
 
                 <div class="faq-item">
-                    <h3>How to whitelist planner.maxviskov.com</h3>
+                    <h3>How to whitelist planner.maxkoff.com</h3>
                     <div class="faq-answer">
                         <p>Instructions for popular email providers:</p>
                         <ul>
-                            <li><strong>Gmail:</strong> Add planner.maxviskov.com to your contacts, or mark our email as "Not Spam"</li>
+                            <li><strong>Gmail:</strong> Add planner.maxkoff.com to your contacts, or mark our email as "Not Spam"</li>
                             <li><strong>Outlook:</strong> Go to Settings → Mail → Junk Email → Safe Senders and add our domain</li>
                             <li><strong>Yahoo:</strong> Add the sender to your contacts or whitelist the domain in spam settings</li>
                             <li><strong>Apple Mail:</strong> Right-click the email and select "Add to VIPs"</li>

@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 // Add custom head content for this template
 function threep_contact_head_content() {
     ?>
-    <meta name="description" content="Get in touch with Max Viskov and the 3P Life Operating System team. Business inquiries, partnerships, feedback, and general questions welcome.">
+    <meta name="description" content="Get in touch with Max Koff and the 3P Life Operating System team. Business inquiries, partnerships, feedback, and general questions welcome.">
     
     <style>
         /* Reset and Base Styles for 3P Contact Page */
@@ -375,7 +375,7 @@ get_header(); ?>
                     
                     <div class="info-item">
                         <h4>📧 Direct Email</h4>
-                        <p>hello@maxviskov.com<br>
+                        <p>hello@maxkoff.com<br>
                         <small>For all general inquiries and business matters</small></p>
                     </div>
 
